@@ -1,0 +1,27 @@
+.page-content {
+  margin-top: 25px !important;
+}
+#login-form-link.active > h3, #register-form-link.active > h3 {
+  -webkit-transition: all 0.1s linear;
+  -moz-transition: all 0.1s linear;
+  transition: all 0.1s linear;
+  font-size: 19px;
+  color: #0275d8;
+}
+#login-form-link > h3, #register-form-link > h3 {
+  color: #666;
+  font-size: 16px;
+}
+#register-form, #login-form {
+  display: none !important;
+}
+#register-form.active, #login-form.active {
+  display: block !important;
+}
+.btn-rounded {
+    -webkit-border-radius: 10em;
+    -moz-border-radius: 10em;
+    -ms-border-radius: 10em;
+    -o-border-radius: 10em;
+    border-radius: 10em !important;
+}
