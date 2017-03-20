@@ -1,0 +1,127 @@
+.body {
+    background-color: #ebebeb;
+    margin-top: -10px;
+}
+
+.header {
+    
+    height: 100px;
+    max-height: 200px;
+    background-color: #0c59cf;
+}
+
+.header_label {
+    color: ghostwhite;
+    font-family: Adamina sans-serif;
+    font-style: italic;
+    font-size: 55px;
+    margin-top: 10px;
+    
+}
+
+.header_button {
+    margin-top: 30px;
+    min-width: 80px;
+    max-width: 100px;
+    font-family: Helvetica, sans-serif;
+    font-size: 18px;
+    color: ghostwhite;
+    background-color: #3d8af7;
+    text-decoration: none;
+    border-radius: 5px; 
+    border: 0px;
+    box-shadow: 2px 5px 5px black;
+}
+
+.header_button:hover {
+    opacity: .8;
+
+}
+
+.welcome {
+    font-family: cursive, sans-serif;
+    color: #0c59cf;
+    font-size: 5em;
+}
+
+.main_content {
+    background-color: lightgray;
+    padding: 30px;
+}
+
+.inventory {
+    background-color: #b70f0a;
+    opacity: ;
+    width: 200px;
+    height: 250px;
+    font-family: Helvetica, sans-serif;
+    font-size: 40px;
+    color: ghostwhite;
+    text-shadow: 4px 3px black;
+    border-radius: 10px;
+    border: 0px;
+}
+
+.inventory:hover {
+    opacity: .8;
+}
+
+.order_status {
+    background-color: #033076;
+    opacity: ;
+    height: 250px;
+    font-family: Helvetica, sans-serif;
+    font-size: 40px;
+    color: ghostwhite;
+    text-shadow: 4px 3px black;
+    border-radius: 10px;
+    border: 0px;
+}
+
+.order_status:hover {
+    opacity: .8;
+}
+
+.floor_plan {
+    background-color: #2e7d32;
+    opacity: ;
+    height: 250px;
+    font-family: Helvetica, sans-serif;
+    font-size: 40px;
+    color: ghostwhite;
+    text-shadow: 4px 3px black;
+    border-radius: 10px;
+    border: 0px;
+}
+
+.floor_plan:hover {
+    opacity: .8;
+}
+
+.account {
+    background-color: #f4eb49;
+    opacity: ;
+    height: 250px;
+    font-family: Helvetica, sans-serif;
+    font-size: 40px;
+    color: ghostwhite;
+    text-shadow: 4px 3px black;
+    border-radius: 10px;
+    border: 0px;
+}
+
+.account:hover {
+    opacity: .8;
+}
+
+.line {
+    background-color: darkgray;
+    
+    
+}
+
+.footer {
+    margin-top: 30px;
+    background-color: darkgrey;
+    height: 130px;
+}
