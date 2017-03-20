@@ -10,13 +10,13 @@
       <?php include("nav.html"); ?>
       <div class="page-content">
         <div class="card card-login">
-          <div class="card-header">
+          <div class="card-header white-text bg-primary">
             <div class="row">
               <div class="col-6 text-center">
                 <a href="#" class="active" id="login-form-link"><h3>Login</h3></a>
               </div>
               <div class="col-6 text-center">
-                <a href="#" id="register-form-link"><h3>Register</h3></a>
+                <a href="#" class="register" id="register-form-link"><h3>Register</h3></a>
               </div>
             </div>
           </div>
@@ -24,33 +24,53 @@
             <form class="active" id="login-form" method="post" action="login.php">
               <div class="md-form">
                 <i class="fa fa-user prefix"></i>
-                <input type="text" id="username" class="form-control" />
+                <input type="text" id="username" name="username" class="form-control" />
                 <label for="username">Username</label>
               </div>
               <div class="md-form">
                 <i class="fa fa-lock prefix"></i>
-                <input type="password" id="password" class="form-control" />
+                <input type="password" id="password" name="password" class="form-control" />
                 <label for="password">Password</label>
               </div>
-              <button class="btn btn-primary btn-rounded btn-block">Submit <i class="fa fa-check fa-fw right"></i></button>
+              <button class="btn bg-primary btn-rounded btn-block">Submit <i class="fa fa-check fa-fw right"></i></button>
             </form>
             <form class="" id="register-form" method="post" action="register.php" >
               <div class="md-form">
                 <i class="fa fa-at prefix"></i>
-                <input type="email" id="email" class="form-control" />
+                <input type="email" id="email" name="email" class="form-control" />
                 <label for="email">Email</label>
               </div>
               <div class="md-form">
                 <i class="fa fa-user prefix"></i>
-                <input type="text" id="username" class="form-control" />
+                <input type="text" id="username" name="username" class="form-control" />
                 <label for="username">Username</label>
               </div>
               <div class="md-form">
                 <i class="fa fa-lock prefix"></i>
-                <input type="password" id="password" class="form-control" />
+                <input type="password" id="password" name="password" class="form-control" />
                 <label for="password">Password</label>
               </div>
-              <button class="btn btn-primary btn-rounded btn-block">Submit <i class="fa fa-check fa-fw right"></i></button>
+              <div class="md-form">
+                <i class="fa fa-lock prefix"></i>
+                <input type="password" id="confirm-password" name="confirm-password" class="form-control" />
+                <label for="confirm-password">Confirm Password</label>
+              </div>
+              <div class="row">
+                <div class="form-control text-center" style="border: 0px;">
+                  <legend>
+                    Are You a Home Owner or Builder?
+                  </legend>
+                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary">
+                      <input type="radio" name="selecion" id="builder" value="builder" autocomplete="off">Builder <i class="fa fa-wrench fa-fw"></i>
+                    </label>
+                    <label class="btn btn-primary">
+                      <input type="radio" name="selection" id="owner" value="owner" autocomplete="off">Home Owner <i class="fa fa-home fa-fw"></i>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <button class="btn bg-primary btn-rounded btn-block">Submit <i class="fa fa-check fa-fw right"></i></button>
             </form>
           </div>
         </div>
