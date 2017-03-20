@@ -1,6 +1,29 @@
 .page-content {
   margin-top: 25px !important;
 }
+.nav-link {
+  padding: 1em 1em !important;
+}
+.navbar {
+  margin-top: 15px !important;
+}
+.white-text {
+  color: #FFF !important;
+}
+small {
+  font-size: 50% !important;
+}
+.ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+#footer {
+  padding: 0.75rem 1.25rem !important;
+}
+.btn-outline {
+  background-color: #FFF !important;
+}
 #login-form-link.active > h3, #register-form-link.active > h3 {
   -webkit-transition: all 0.1s linear;
   -moz-transition: all 0.1s linear;
