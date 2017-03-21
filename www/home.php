@@ -5,15 +5,14 @@ if (empty($_SESSION['username'])) {
   header('location: index.php');
 };
 ?>
-<html>
+<html lang="en">
 <head>
   <?php include('head.html'); ?>
 </head>
 <body>
   <?php include("nav.html"); ?>
   <div class="container">
-    <?php echo '<pre>' . print_r($_SESSION, TRUE) . '</pre>'; ?>
-
+    <?php /*echo '<pre>' . print_r($_SESSION, TRUE) . '</pre>';*/ ?>
     <div class="page-content">
       <div class="row justify-content-center">
         <div class="card">
@@ -79,8 +78,8 @@ if (empty($_SESSION['username'])) {
             </div>
           </div>
         </div>
+      </div> <!-- row -->
 
-      </div>
     </div>
   </div>
   <?php include('scripts.html'); ?>
