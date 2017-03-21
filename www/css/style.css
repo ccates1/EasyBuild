@@ -43,6 +43,7 @@ small {
   font-size: 20px !important;
   color: #ffff00 !important;
   border-bottom: 2px groove #fff;
+  font-weight: bold !important;
 }
 #login-form-link > h3, #register-form-link > h3 {
   color: #fff;
