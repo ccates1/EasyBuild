@@ -1,3 +1,11 @@
+body {
+  font-family: Raleway,sans-serif !important;
+    font-style: normal;
+    font-weight: 400;
+}
+.navbar-brand {
+  display: inline-table !important;
+}
 .page-content {
   margin-top: 25px !important;
 }
@@ -5,10 +13,14 @@
   padding: 1em 1em !important;
 }
 .navbar {
-  margin-top: 15px !important;
+  margin-bottom: 25px !important;
+}
+.card-margin {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 .white-text {
-  color: #FFF !important;
+  color: #fff !important;
 }
 small {
   font-size: 50% !important;
@@ -22,19 +34,21 @@ small {
   padding: 0.75rem 1.25rem !important;
 }
 .btn-outline {
-  background-color: #FFF !important;
+  background-color: #fff !important;
 }
 #login-form-link.active > h3, #register-form-link.active > h3 {
   -webkit-transition: all 0.1s linear;
   -moz-transition: all 0.1s linear;
   transition: all 0.1s linear;
   font-size: 20px !important;
-  font-weight: bold;
-  color: #fff !important;
+  color: #ffff00 !important;
+  border-bottom: 2px groove #fff;
 }
 #login-form-link > h3, #register-form-link > h3 {
   color: #fff;
   font-size: 16px !important;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 #register-form, #login-form {
   display: none !important;

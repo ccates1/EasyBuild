@@ -1,15 +1,26 @@
-<?php include('connection.php'); ?>
-  <html>
+<?php
+session_start();
+include('connection.php');
+if (empty($_SESSION['username'])) {
+  header('location: index.php');
+};
+?>
+<html>
+<head>
+  <?php include('head.html'); ?>
+</head>
+<body>
+  <?php include("nav.html"); ?>
+  <div class="container">
+    <?php echo '<pre>' . print_r($_SESSION, TRUE) . '</pre>'; ?>
 
-  <head>
-    <?php include('head.html'); ?>
-  </head>
-
-  <body>
-    <div class="container">
-      <?php include("nav.html"); ?>
-        <div class="page-content">
-          <div class="row">
+    <div class="page-content">
+      <div class="row justify-content-center">
+        <div class="card">
+          <div class="card-header bg-primary white-text">
+            <h4>Welcome, <?php echo "".$_SESSION['username'].""; ?> <i class="fa fa-user-circle-o fa-fw"></i></h4>
+          </div>
+          <div class="card-body card-margin">
             <div class="card-deck-wrapper">
               <div class="card-deck">
                 <div class="col-md-3">
@@ -66,15 +77,17 @@
                 </div>
               </div>
             </div>
-
           </div>
         </div>
-    </div>
-    <?php include('scripts.html'); ?>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.matchHeight/0.7.0/jquery.matchHeight-min.js"></script>
-    <script type="text/javascript">
-      $('.card').matchHeight();
-    </script>
-  </body>
 
-  </html>
+      </div>
+    </div>
+  </div>
+  <?php include('scripts.html'); ?>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.matchHeight/0.7.0/jquery.matchHeight-min.js"></script>
+  <script type="text/javascript">
+  $('.card').matchHeight();
+  </script>
+</body>
+
+</html>

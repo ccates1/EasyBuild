@@ -1,36 +1,44 @@
 <?php
   session_start();
   include('connection.php');
-  if($_SERVER['REQUEST_METHOD']=='POST') {
+  function test_input($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+  }
+  if($_SERVER["REQUEST_METHOD"] == "POST") {
     $errors = array();
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $confirmPassword = $_POST['confirm-password'];
-    if(isset($_POST['selection'])) {
-      $user_type = $_POST['selection'];
-    } else {
-      $errors[] = "Please select a type of user for this account!";
-    }
+    $username = test_input($_POST["username"]);
+    $email = test_input($_POST["email"]);
+    $password = test_input($_POST["password"]);
+    $confirmPassword = test_input($_POST["confirm-password"]);
+    $user_type = test_input($_POST["selection"]);
+    echo("<script>console.log('PHP: ".$username."');</script>");
+    echo("<script>console.log('PHP: ".$email."');</script>");
+    echo("<script>console.log('PHP: ".$password."');</script>");
+    echo("<script>console.log('PHP: ".$confirmPassword."');</script>");
+    echo("<script>console.log('PHP: ".$user_type."');</script>");
+
     if(!empty($username) && !empty($email) && !empty($password) && !empty($confirmPassword) && !empty($user_type)) {
-      if($password != $confirmPassword) {
-        $errors[] = 'Passwords do not match!';
-      }
       $checkemail = mysqli_query($dbc, "SELECT * FROM Accounts WHERE email = '$email'");
       $checkusername = mysqli_query($dbc, "SELECT * FROM Accounts WHERE username = '$username'");
       if(mysqli_num_rows($checkemail) != 0) {
         $errors[] = "Email is already registered within the system!";
-      }
-      if(mysqli_num_rows($checkusername) != 0) {
+      } else if(mysqli_num_rows($checkusername) != 0) {
         $errors[] = "Username is already registered within the system!";
-      }
-      if(!empty($errors)) {
-        mysqli_query($dbc, "INSERT INTO Accounts (`username`, `email`, `password`, `type`) VALUES ('".$username."', '".$email."', '".$password."', '".$type."');");
+      } else if($password != $confirmPassword) {
+        $errors[] = 'Passwords do not match!';
+      } else {
+
+        mysqli_query($dbc, "INSERT INTO `Accounts` (`username`, `email`, `password`, `type`) VALUES ('".$username."', '".$email."', '".$password."', '".$user_type."');");
+        echo " row inserted, everything worked fine";
         $_SESSION['user_type'] = $user_type;
         $_SESSION['username'] = $username;
         $_SESSION['email'] = $email;
         header('location: home.php');
-      } else {
+      }
+      if(!empty($errors)) {
         echo "Error! The following error(s) occurred: <br />";
         foreach($errors as $msg){
           echo $msg."<br />";
@@ -47,6 +55,9 @@
       }
       if(empty($password)) {
         $errors[] = "Please enter a password for this account!";
+      }
+      if(empty($user_type)) {
+        $errors[] = "Please select a user type!";
       }
       if($password != $confirmPassword) {
         $errors[] = "Passwords do not match!";

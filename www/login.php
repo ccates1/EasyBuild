@@ -7,17 +7,20 @@
     $password = $_POST['password'];
     if(!empty($username) && !empty($password)) {
       $query = mysqli_query($dbc, "SELECT * FROM Accounts WHERE username = '$username'");
-      if(mysqli_num_rows($query) != 0) {
+      $numrows = mysqli_num_rows($query);
+      if($numrows != 0) {
         while($row = mysqli_fetch_array($query)) {
           $dbusername = $row['username'];
+          echo("<script>console.log('PHP: ".$dbusername."');</script>");
+
           $dbpassword = $row['password'];
           $dbtype = $row['type'];
         }
         if($username == $dbusername) {
           if($password == $dbpassword) {
             $_SESSION['user_type'] = $dbtype;
-            $_SESSION['username'] = $dbusername;
-            $_SESSION['password'] = $dbpassword;
+            $_SESSION['username'] = $username;
+            $_SESSION['password'] = $password;
             header('location: home.php');
           } else {
             $errors[] = "Invalid password!";
