@@ -33,6 +33,21 @@ session_start();
               <input type="password" id="password" name="password" class="form-control" />
               <label for="password">Password</label>
             </div>
+            <div class="row">
+              <div class="form-control text-center" style="border: 0px;">
+                <legend style="color: #000;">
+                  Are you a home owner or builder?
+                </legend>
+                <div class="btn-group" data-toggle="buttons">
+                  <label class="btn btn-primary">
+                    <input type="radio" name="user_type" id="builder" value="builder">Builder <i class="fa fa-wrench fa-fw"></i>
+                  </label>
+                  <label class="btn btn-primary">
+                    <input type="radio" name="user_type" id="owner" value="owner" >Home Owner <i class="fa fa-home fa-fw"></i>
+                  </label>
+                </div>
+              </div>
+            </div>
             <button type="submit" class="btn bg-primary btn-rounded btn-block">Submit <i class="fa fa-check fa-fw right"></i></button>
           </form>
           <form class="" id="register-form" name="registrationForm" method="post" action="register.php" >
@@ -58,12 +73,12 @@ session_start();
             </div>
             <div class="row">
               <div class="form-control text-center" style="border: 0px;">
-                <legend>
-                  Are You a Home Owner or Builder?
+                <legend style="color: #000;">
+                  Are you a home owner or builder?
                 </legend>
                 <div class="btn-group" data-toggle="buttons">
                   <label class="btn btn-primary">
-                    <input type="radio" name="selection" id="builder" value="builder" checked>Builder <i class="fa fa-wrench fa-fw"></i>
+                    <input type="radio" name="selection" id="builder" value="builder">Builder <i class="fa fa-wrench fa-fw"></i>
                   </label>
                   <label class="btn btn-primary">
                     <input type="radio" name="selection" id="owner" value="owner" >Home Owner <i class="fa fa-home fa-fw"></i>

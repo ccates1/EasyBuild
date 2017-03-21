@@ -5,8 +5,15 @@
     $errors = array();
     $username = $_POST['username'];
     $password = $_POST['password'];
-    if(!empty($username) && !empty($password)) {
-      $query = mysqli_query($dbc, "SELECT * FROM Accounts WHERE username = '$username'");
+    if(!empty($_POST['user_type'])) {
+      $user_type = $_POST['user_type'];
+    }
+    if(!empty($username) && !empty($password) && !empty($user_type)) {
+      if($user_type == 'builder') {
+        $query = mysqli_query($dbc, "SELECT * FROM Builders WHERE username = '$username'");
+      } else {
+        $query = mysqli_query($dbc, "SELECT * FROM Owners WHERE username = '$username'");
+      }
       if(mysqli_num_rows($query) != 0) {
         while($row = mysqli_fetch_array($query)) {
           $dbusername = $row['username'];
@@ -36,6 +43,9 @@
       }
       if(empty($password)) {
         $errors[] = "Please enter a password.";
+      }
+      if(empty($user_type)) {
+        $errors[] = "Please select a type of user.";
       }
     }
     if(!empty($errors)) {
