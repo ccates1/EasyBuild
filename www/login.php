@@ -7,8 +7,7 @@
     $password = $_POST['password'];
     if(!empty($username) && !empty($password)) {
       $query = mysqli_query($dbc, "SELECT * FROM Accounts WHERE username = '$username'");
-      $numrows = mysqli_num_rows($query);
-      if($numrows != 0) {
+      if(mysqli_num_rows($query) != 0) {
         while($row = mysqli_fetch_array($query)) {
           $dbusername = $row['username'];
           echo("<script>console.log('PHP: ".$dbusername."');</script>");
