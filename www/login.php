@@ -17,16 +17,14 @@
       if(mysqli_num_rows($query) != 0) {
         while($row = mysqli_fetch_array($query)) {
           $dbusername = $row['username'];
-          echo("<script>console.log('PHP: ".$dbusername."');</script>");
-
-          $dbpassword = $row['password'];
+          $dbid = $row['id'];
           $dbtype = $row['type'];
         }
         if($username == $dbusername) {
           if($password == $dbpassword) {
             $_SESSION['user_type'] = $dbtype;
             $_SESSION['username'] = $username;
-            $_SESSION['password'] = $password;
+            $_SESSION['user_id'] = $dbid;
             header('location: home.php');
           } else {
             $errors[] = "Invalid password!";
