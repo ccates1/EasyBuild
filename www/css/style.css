@@ -3,8 +3,12 @@ body {
     font-style: normal;
     font-weight: 400;
 }
+td {
+  vertical-align: middle !important;
+  color: #000;
+}
 .navbar-brand {
-  display: inline-table !important;
+  margin-top: 0.50em !important;
 }
 .page-content {
   margin-top: 25px !important;

@@ -13,6 +13,57 @@ if (empty($_SESSION['username'])) {
   <?php include("nav.html"); ?>
   <div class="container">
     <div class="page-content">
+      <?php
+      if(!empty($_GET['id'])) {
+        $sessionid = $_GET['id'];
+        $query = mysqli_query($dbc, "SELECT Sessions.name, Sessions.id, Builders.username AS builderusername, Builders.email AS builderemail, Owners.username AS ownerusername, Owners.email AS owneremail FROM Sessions INNER JOIN Builders ON Builders.id = Sessions.builder_id INNER JOIN Owners ON Owners.id = Sessions.owner_id WHERE name = 'test'");
+        if(mysqli_num_rows($query) != 0) {
+          while($row = mysqli_fetch_array($query)) {
+            $sessionname = $row['name'];
+            $sessionid = $row['id'];
+            $buildername = $row['builderusername'];
+            $builderemail = $row['builderemail'];
+            $ownername = $row['ownerusername'];
+            $owneremail = $row['owneremail'];
+          }
+        }
+      }
+      ?>
+      <div class="card">
+        <div class="card-header bg-primary white-text">
+          Session Information
+        </div>
+        <div class="card-block">
+          <div class="list-group list-group-flush">
+            <div class="list-group-item">
+              <ul class="list-inline">
+                <li>
+                  <i class="fa fa-wrench fa-2x"></i>
+                </li>
+                <li>
+                  Username: <?php echo $buildername ?>
+                </li>
+                <li>
+                  Email: <?php echo $builderemail ?>
+                </li>
+              </ul>
+            </div>
+            <div class="list-group-item">
+              <ul class="list-inline">
+                <li>
+                  <i class="fa fa-home fa-2x"></i>
+                </li>
+                <li>
+                  Username: <?php echo $ownername ?>
+                </li>
+                <li>
+                  Email: <?php echo $owneremail ?>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
       <section id="cd-timeline" class="cd-container">
         <div class="cd-timeline-block">
           <div class="cd-timeline-img cd-picture">

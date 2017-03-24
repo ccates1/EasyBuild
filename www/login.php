@@ -11,18 +11,25 @@
     if(!empty($username) && !empty($password) && !empty($user_type)) {
       if($user_type == 'builder') {
         $query = mysqli_query($dbc, "SELECT * FROM Builders WHERE username = '$username'");
+        $isbuilder = true;
       } else {
         $query = mysqli_query($dbc, "SELECT * FROM Owners WHERE username = '$username'");
+        $isbuilder = false;
       }
       if(mysqli_num_rows($query) != 0) {
         while($row = mysqli_fetch_array($query)) {
           $dbusername = $row['username'];
           $dbid = $row['id'];
-          $dbtype = $row['type'];
+          $dbpassword = $row['password'];
+          if($isbuilder == true) {
+            $_SESSION['user_type'] = 'builder';
+          } else {
+            $_SESSION['user_type'] = 'owner';
+          }
         }
         if($username == $dbusername) {
           if($password == $dbpassword) {
-            $_SESSION['user_type'] = $dbtype;
+            $_SESSION['user_type'] = 'owner';
             $_SESSION['username'] = $username;
             $_SESSION['user_id'] = $dbid;
             header('location: home.php');
