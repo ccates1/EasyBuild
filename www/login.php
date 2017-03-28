@@ -5,9 +5,7 @@
     $errors = array();
     $username = $_POST['username'];
     $password = $_POST['password'];
-    if(!empty($_POST['user_type'])) {
-      $user_type = $_POST['user_type'];
-    }
+    $user_type = $_POST['user_type'];
     if(!empty($username) && !empty($password) && !empty($user_type)) {
       if($user_type == 'builder') {
         $query = mysqli_query($dbc, "SELECT * FROM Builders WHERE username = '$username'");
@@ -21,15 +19,14 @@
           $dbusername = $row['username'];
           $dbid = $row['id'];
           $dbpassword = $row['password'];
-          if($isbuilder == true) {
-            $_SESSION['user_type'] = 'builder';
-          } else {
-            $_SESSION['user_type'] = 'owner';
-          }
         }
         if($username == $dbusername) {
           if($password == $dbpassword) {
-            $_SESSION['user_type'] = 'owner';
+            if($isbuilder == true) {
+              $_SESSION['user_type'] = 'builder';
+            } else {
+              $_SESSION['user_type'] = 'owner';
+            }
             $_SESSION['username'] = $username;
             $_SESSION['user_id'] = $dbid;
             header('location: home.php');

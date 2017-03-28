@@ -25,7 +25,7 @@ if (empty($_SESSION['username'])) {
               <label for="search">Search for User to Connect With</label>
             </div>
             <div class="form-control text-center" style="border: 0px;">
-              <legend style="color: #000;">
+              <legend style="color: #000; border-bottom: 0px !important;">
                 Are you searching for a home owner or builder?
               </legend>
               <div class="btn-group" data-toggle="buttons">
@@ -84,22 +84,33 @@ if (empty($_SESSION['username'])) {
           <div class="row">
               <?php
               function found($username, $email, $user_type) {
-                echo "<div class='col-xs-12'>
+                echo "
                 <div class='alert alert-success' role='alert'>
                 <form method='post' action='connectionSession.php'>
                 <input type='hidden' name='username' class='hidden' value=".$username." />
                 <input type='hidden' name='email' class='hidden' value=".$email." />
                 <input type='hidden' name='user_type' class='hidden' value=".$user_type." />
-                <div class='md-form' style='margin-top: 10px;'>
-                <i class='fa fa-info-circle prefix'></i>
-                <input type='text'id='sessionname' class='form-control' name='sessionname' />
-                <label for='sessionname'>Please enter a name for your builder/home owner session here</label>
-                </div>
                 <div class='text-center'>
                 <strong>User Found!</strong> <br />
                 <i class='fa fa-user-circle-o fa-fw'></i> Username: ".$username." <br />
                 <i class='fa fa-at fa-fw'></i> Email: ".$email." <br />
-                <button type='submit' class='btn btn-info'>Send Connection! <i class='fa fa-envelope-o fa-fw'></i></button>
+                </div>
+                <div class='row'>
+                <div class='col-md-8 offset-md-2'>
+                <div class='md-form' style='margin-top: 15px;'>
+                <i class='fa fa-info-circle prefix'></i>
+                <input type='text'id='sessionname' class='form-control' name='sessionname' />
+                <label for='sessionname'>Session Name</label>
+                <div class='text-center'>
+                <p >*A Session Name is Required</p>
+                </div>
+
+                </div>
+                </div>
+                </div>
+                <div class='text-center'>
+                <button type='submit' class='btn btn-success'>Send Connection! <i class='fa fa-envelope-o fa-fw'></i></button>
+                </div>
                 </div>
                 </form>
                 </div>";

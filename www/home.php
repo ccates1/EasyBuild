@@ -66,10 +66,18 @@ if (empty($_SESSION['username'])) {
                     </td>
                     <td>
                       <?php $sessionidentifier = $row['id']; ?>
-                      <a type="button" class="btn btn-primary" href="session.php?id=<?php echo $sessionidentifier; ?>">Go</button>
+                      <a class="text-primary" href="session.php?id=<?php echo $sessionidentifier; ?>">GO</a>
                     </td>
                   </tr>
-                  <?php } }?>
+                  <?php } } else {
+                    ?>
+                    <tr class="text-center">
+                      <td colspan="4">
+                        No sessions found
+                      </td>
+                    </tr>
+                  <?php
+                  }?>
                 </tbody>
               </table>
             </div>

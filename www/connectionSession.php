@@ -7,7 +7,7 @@
     $recipientusername = $_POST['username'];
     $recipientemail = $_POST['email'];
     $recipienttype = $_POST['user_type'];
-    $sessionname = $_POST['sessionname'];
+    $sessionname = mysqli_real_escape_string($dbc, trim($_POST['sessionname']));
 
     if(!empty($recipientusername) && !empty($recipientemail) && !empty($recipienttype) && !empty($sessionname)) {
       if($recipienttype == "builder") {
@@ -28,22 +28,141 @@
           $checkquery2 = mysqli_query($dbc, "SELECT * FROM Sessions WHERE name = '$sessionname';");
           if(mysqli_num_rows($checkquery) != 0) {
             $errors[] = "There is already a session with these two users!";
-          } else if(mysqli_num_rows($checkquery2) != 0) {
+          }
+          if(mysqli_num_rows($checkquery2) != 0) {
             $errors[] = "There is already session with this name!";
           }
           if(empty($errors)) {
             $query2 = mysqli_query($dbc, "INSERT INTO Sessions (`name`, `owner_id`, `builder_id`) VALUES ('".$sessionname."', '".$senderid."', '".$dbrecipientid."');");
-            header('location: home.php');
+
+            $query3 = "INSERT INTO ChecklistItems (`session_id`, `description`, `step`, `hasSubs`) SELECT id, 'Obtaining Building Permits', '1', '0' FROM Sessions WHERE name = '$sessionname';";
+
+            $query3 .= "INSERT INTO ChecklistItems (`session_id`, `description`, `step`, `hasSubs`) SELECT id, 'Foundation', '2', '0' FROM Sessions WHERE name = '$sessionname';";
+
+            $query3 .= "INSERT INTO ChecklistItems (`session_id`, `description`, `step`, `hasSubs`) SELECT id, 'Roofing', '3', '0' FROM Sessions WHERE name = '$sessionname';";
+
+            $query3 .= "INSERT INTO ChecklistItems (`session_id`, `description`, `step`, `hasSubs`) SELECT id, 'Rough-in Tasks', '4', '1' FROM Sessions WHERE name = '$sessionname';";
+
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Plumbing', '0' FROM ChecklistItems WHERE step = '4';";
+
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Electrical', '0' FROM ChecklistItems WHERE step = '4';";
+
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'HVAC', '0' FROM ChecklistItems WHERE step = '4';";
+
+            $query3 .= "INSERT INTO ChecklistItems (`session_id`, `description`, `step`, `hasSubs`) SELECT id, 'Insulation', '5', '0' FROM Sessions WHERE name = '$sessionname';";
+
+            $query3 .= "INSERT INTO ChecklistItems (`session_id`, `description`, `step`, `hasSubs`) SELECT id, 'Drywall', '6', '0' FROM Sessions WHERE name = '$sessionname';";
+
+            $query3 .= "INSERT INTO ChecklistItems (`session_id`, `description`, `step`, `hasSubs`) SELECT id, 'Paint', '7', '0' FROM Sessions WHERE name = '$sessionname';";
+
+            $query3 .= "INSERT INTO ChecklistItems (`session_id`, `description`, `step`, `hasSubs`) SELECT id, 'Primary Interior Construction', '8', '1' FROM Sessions WHERE name = '$sessionname';";
+
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Cabinets', '0' FROM ChecklistItems WHERE step = '8';";
+
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Flooring', '0' FROM ChecklistItems WHERE step = '8';";
+
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Interior Trim/Doors', '0' FROM ChecklistItems WHERE step = '8';";
+
+            $query3 .= "INSERT INTO ChecklistItems (`session_id`, `description`, `step`, `hasSubs`) SELECT id, 'Secondary Interior & Exterior Construction', '9', '1' FROM Sessions WHERE name = '$sessionname';";
+
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Final Paint', '0' FROM ChecklistItems WHERE step = '9';";
+
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Fixtures', '0' FROM ChecklistItems WHERE step = '9';";
+
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Appliances', '0' FROM ChecklistItems WHERE step = '9';";
+
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Landscaping/Driveway', '0' FROM ChecklistItems WHERE step = '9';";
+
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Attic Insulation', '0' FROM ChecklistItems WHERE step = '9';";
+
+            $query3 .= "INSERT INTO ChecklistItems (`session_id`, `description`, `step`, `hasSubs`) SELECT id, 'Obtain Certificate of Occupancy', '10', '0' FROM Sessions WHERE name = '$sessionname';";
+
+            // Execute multi query
+            if (mysqli_multi_query($dbc,$query3)){
+              do{
+                // Store first result set
+                if ($result=mysqli_store_result($dbc)){
+                  while ($row=mysqli_fetch_row($result)){
+                    printf("%s\n",$row[0]);
+                  }
+                  mysqli_free_result($dbc);
+                }
+              }while (mysqli_next_result($dbc));
+            }
+            header("location: home.php");
+
           }
 
-        } else {
+        }
+        if($isbuilder == false ){
           $checkquery = mysqli_query($dbc, "SELECT * FROM Sessions WHERE builder_id = '$senderid' AND owner_id = '$dbrecipientid';");
+          $checkquery2 = mysqli_query($dbc, "SELECT * FROM Sessions WHERE name = '$sessionname';");
           if(mysqli_num_rows($checkquery) != 0) {
             $errors[] = "There is already a session with these two users!";
           }
+          if(mysqli_num_rows($checkquery2) != 0) {
+            $errors[] = "There is already session with this name!";
+          }
           if(empty($errors)) {
             $query2 = mysqli_query($dbc, "INSERT INTO Sessions (`name`, `owner_id`, `builder_id`) VALUES ('".$sessionname."', '".$dbrecipientid."', '".$senderid."');");
-            header('location: home.php');
+
+            $query3 = "INSERT INTO ChecklistItems (`session_id`, `description`, `step`, `hasSubs`) SELECT id, 'Obtaining Building Permits', '1', '0' FROM Sessions WHERE name = '$sessionname';";
+
+            $query3 .= "INSERT INTO ChecklistItems (`session_id`, `description`, `step`, `hasSubs`) SELECT id, 'Foundation', '2', '0' FROM Sessions WHERE name = '$sessionname';";
+
+            $query3 .= "INSERT INTO ChecklistItems (`session_id`, `description`, `step`, `hasSubs`) SELECT id, 'Roofing', '3', '0' FROM Sessions WHERE name = '$sessionname';";
+
+            $query3 .= "INSERT INTO ChecklistItems (`session_id`, `description`, `step`, `hasSubs`) SELECT id, 'Rough-in Tasks', '4', '1' FROM Sessions WHERE name = '$sessionname';";
+
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Plumbing', '0' FROM ChecklistItems WHERE step = '4';";
+
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Electrical', '0' FROM ChecklistItems WHERE step = '4';";
+
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'HVAC', '0' FROM ChecklistItems WHERE step = '4';";
+
+            $query3 .= "INSERT INTO ChecklistItems (`session_id`, `description`, `step`, `hasSubs`) SELECT id, 'Insulation', '5', '0' FROM Sessions WHERE name = '$sessionname';";
+
+            $query3 .= "INSERT INTO ChecklistItems (`session_id`, `description`, `step`, `hasSubs`) SELECT id, 'Drywall', '6', '0' FROM Sessions WHERE name = '$sessionname';";
+
+            $query3 .= "INSERT INTO ChecklistItems (`session_id`,`description`, `step`, `hasSubs`) SELECT id, 'Paint', '7', '0' FROM Sessions WHERE name = '$sessionname';";
+
+            $query3 .= "INSERT INTO ChecklistItems (`session_id`,`description`, `step`, `hasSubs`) SELECT id, 'Primary Interior Construction', '8', '1' FROM Sessions WHERE name = '$sessionname';";
+
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Cabinets', '0' FROM ChecklistItems WHERE step = '8';";
+
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Flooring', '0' FROM ChecklistItems WHERE step = '8';";
+
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Interior Trim/Doors', '0' FROM ChecklistItems WHERE step = '8';";
+
+            $query3 .= "INSERT INTO ChecklistItems (`session_id`,`description`, `step`, `hasSubs`) SELECT id, 'Secondary Interior & Exterior Construction', '9', '1' FROM Sessions WHERE name = '$sessionname';";
+
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Final Paint', '0' FROM ChecklistItems WHERE step = '9';";
+
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Fixtures', '0' FROM ChecklistItems WHERE step = '9';";
+
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Appliances', '0' FROM ChecklistItems WHERE step = '9';";
+
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Landscaping/Driveway', '0' FROM ChecklistItems WHERE step = '9';";
+
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Attic Insulation', '0' FROM ChecklistItems WHERE step = '9';";
+
+            $query3 .= "INSERT INTO ChecklistItems (`session_id`,`description`, `step`, `hasSubs`) SELECT id, 'Obtain Certificate of Occupancy', '10', '0' FROM Sessions WHERE name = '$sessionname';";
+
+            // Execute multi query
+            if (mysqli_multi_query($dbc,$query3)){
+              do{
+                // Store first result set
+                if ($result=mysqli_store_result($dbc)){
+                  while ($row=mysqli_fetch_row($result)){
+                    printf("%s\n",$row[0]);
+                  }
+                  mysqli_free_result($dbc);
+                }
+              }while (mysqli_next_result($dbc));
+            }
+
+            header("location: home.php");
+
           }
         }
       }

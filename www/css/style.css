@@ -3,9 +3,15 @@ body {
     font-style: normal;
     font-weight: 400;
 }
+.card-body-flush {
+  padding: 0px !important;
+}
 td {
   vertical-align: middle !important;
   color: #000;
+}
+#disabler {
+    opacity: 0.5;
 }
 .navbar-brand {
   margin-top: 0.50em !important;
@@ -77,7 +83,7 @@ legend {
   line-height: inherit;
   color: #333;
   border: 0;
-  border-bottom: 1px solid #e5e5e5 !important;
+  border-bottom: 1px solid #e5e5e5;
 }
 .cssanimations .cd-timeline-img.is-hidden {
   visibility: hidden;
