@@ -66,7 +66,7 @@ if (empty($_SESSION['username'])) {
                     </td>
                     <td>
                       <?php $sessionidentifier = $row['id']; ?>
-                      <a class="text-primary" href="session.php?id=<?php echo $sessionidentifier; ?>">GO</a>
+                      <a role="button" class="btn btn-outline btn-outline-warning waves-effect" href="session.php?id=<?php echo $sessionidentifier; ?>">GO</a>
                     </td>
                   </tr>
                   <?php } } else {
@@ -82,74 +82,12 @@ if (empty($_SESSION['username'])) {
               </table>
             </div>
           </div>
-          <div class="card-body card-margin">
-            <div class="card-deck-wrapper">
-              <div class="card-deck">
-                <div class="col-md-3">
-                  <div class="card">
-                    <div class="card-block danger-color text-center white-text">
-                      <h4 class="card-title">Inventory</h4>
-                      <p class="card-text">
-                        <button type="button" class="btn btn-outline btn-outline-danger waves-effect btn-sm">Access</button>
-                      </p>
-                    </div>
-                    <div class="card-footer danger-color-dark" id="footer">
-                      <small class="ellipsis white-text">Last updated 3 mins ago</small>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="card">
-                    <div class="card-block info-color text-center white-text">
-                      <h4 class="card-title">Order Status</h4>
-                      <p class="card-text">
-                        <button type="button" class="btn btn-outline btn-outline-info waves-effect btn-sm">Access</button>
-                      </p>
-                    </div>
-                    <div class="card-footer info-color-dark" id="footer">
-                      <small class="ellipsis white-text">Last updated 3 mins ago</small>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="card">
-                    <div class="card-block warning-color text-center white-text">
-                      <h4 class="card-title">Floor Plan</h4>
-                      <p class="card-text">
-                        <button type="button" class="btn btn-outline btn-outline-warning waves-effect btn-sm">Access</button>
-                      </p>
-                    </div>
-                    <div class="card-footer warning-color-dark" id="footer">
-                      <small class="ellipsis white-text">Last updated 3 mins ago</small>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <div class="card">
-                    <div class="card-block success-color text-center white-text">
-                      <h4 class="card-title">Account</h4>
-                      <p class="card-text">
-                        <button type="button" class="btn btn-outline btn-outline-success waves-effect btn-sm">Access</button>
-                      </p>
-                    </div>
-                    <div class="card-footer success-color-dark" id="footer">
-                      <small class="ellipsis white-text">Last updated 3 mins ago</small>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div> <!-- row -->
 
     </div>
   </div>
   <?php include('scripts.html'); ?>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.matchHeight/0.7.0/jquery.matchHeight-min.js"></script>
-  <script type="text/javascript">
-  $('.card').matchHeight();
-  </script>
 </body>
 
 </html>

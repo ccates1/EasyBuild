@@ -9,8 +9,8 @@ session_start();
 <body>
   <?php include("unauthorized-nav.html"); ?>
   <div class="container">
-    <div class="page-content">
-      <div class="card">
+    <div class="page-content" style="padding-left: 25px; padding-right: 25px;">
+      <div class="card z-depth-3">
         <div class="card-header white-text bg-primary">
           <div class="row">
             <div class="col-6 text-center">

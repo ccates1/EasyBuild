@@ -1,23 +1,39 @@
 body {
-  font-family: Raleway,sans-serif !important;
+  font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif !important;
     font-style: normal;
     font-weight: 400;
+    min-height: 100% !important;
+    width: 100% !important;
+}
+html {
+  min-height: 100% !important;
+}
+.no-padding {
+  padding-right: 0 !important;
+padding-left: 0 !important;
 }
 .card-body-flush {
   padding: 0px !important;
+}
+.custom-control-description {
+  font-size: 1.05rem !important;
 }
 td {
   vertical-align: middle !important;
   color: #000;
 }
-#disabler {
+.custom-control-input:checked ~ .custom-control-indicator {
+  color: #fff !important;
+  background-color: #0275d8 !important;
+}
+.disabler {
     opacity: 0.5;
 }
 .navbar-brand {
   margin-top: 0.50em !important;
 }
 .page-content {
-  margin-top: 25px !important;
+  margin-bottom: 25px !important;
 }
 .nav-link {
   padding: 1em 1em !important;
@@ -26,8 +42,7 @@ td {
   margin-bottom: 25px !important;
 }
 .card-margin {
-  margin-top: 10px;
-  margin-bottom: 10px;
+  padding-top: 1.25rem;
 }
 .white-text {
   color: #fff !important;
