@@ -35,7 +35,7 @@
           if(empty($errors)) {
             $query2 = mysqli_query($dbc, "INSERT INTO Sessions (`name`, `owner_id`, `builder_id`) VALUES ('".$sessionname."', '".$senderid."', '".$dbrecipientid."');");
 
-            $query3 = "INSERT INTO ChecklistItems (`session_id`, `description`, `step`, `hasSubs`) SELECT id, 'Obtaining Building Permits', '1', '0' FROM Sessions WHERE name = '$sessionname';";
+            $query3 .= "INSERT INTO ChecklistItems (`session_id`, `description`, `step`, `hasSubs`) SELECT id, 'Obtaining Building Permits', '1', '0' FROM Sessions WHERE name = '$sessionname';";
 
             $query3 .= "INSERT INTO ChecklistItems (`session_id`, `description`, `step`, `hasSubs`) SELECT id, 'Foundation', '2', '0' FROM Sessions WHERE name = '$sessionname';";
 
@@ -43,13 +43,13 @@
 
             $query3 .= "INSERT INTO ChecklistItems (`session_id`, `description`, `step`, `hasSubs`) SELECT id, 'Rough-in Tasks', '4', '1' FROM Sessions WHERE name = '$sessionname';";
 
-            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Plumbing', '0' FROM ChecklistItems WHERE step = '4';";
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`, `session_id_fk`) SELECT id, 'Plumbing', '0', session_id FROM ChecklistItems WHERE step = '4';";
 
-            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Electrical', '0' FROM ChecklistItems WHERE step = '4';";
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`, `session_id_fk`) SELECT id, 'Electrical', '0', session_id FROM ChecklistItems WHERE step = '4';";
 
-            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'HVAC', '0' FROM ChecklistItems WHERE step = '4';";
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`, `session_id_fk`) SELECT id, 'HVAC', '0', session_id FROM ChecklistItems WHERE step = '4';";
 
-            $query3 .= "INSERT INTO ChecklistItems (`session_id`, `description`, `step`, `hasSubs`) SELECT id, 'Insulation', '5', '0' FROM Sessions WHERE name = '$sessionname';";
+            $query3 .= "INSERT INTO ChecklistItems (`session_id`, `description`, `step`, `hasSubs`) SELECT id, 'Insulation', '5', '0', FROM Sessions WHERE name = '$sessionname';";
 
             $query3 .= "INSERT INTO ChecklistItems (`session_id`, `description`, `step`, `hasSubs`) SELECT id, 'Drywall', '6', '0' FROM Sessions WHERE name = '$sessionname';";
 
@@ -57,23 +57,23 @@
 
             $query3 .= "INSERT INTO ChecklistItems (`session_id`, `description`, `step`, `hasSubs`) SELECT id, 'Primary Interior Construction', '8', '1' FROM Sessions WHERE name = '$sessionname';";
 
-            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Cabinets', '0' FROM ChecklistItems WHERE step = '8';";
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`, `session_id_fk`) SELECT id, 'Cabinets', '0', session_id FROM ChecklistItems WHERE step = '8';";
 
-            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Flooring', '0' FROM ChecklistItems WHERE step = '8';";
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`, `session_id_fk`) SELECT id, 'Flooring', '0', session_id FROM ChecklistItems WHERE step = '8';";
 
-            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Interior Trim/Doors', '0' FROM ChecklistItems WHERE step = '8';";
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`, `session_id_fk`) SELECT id, 'Interior Trim/Doors', '0', session_id FROM ChecklistItems WHERE step = '8';";
 
             $query3 .= "INSERT INTO ChecklistItems (`session_id`, `description`, `step`, `hasSubs`) SELECT id, 'Secondary Interior & Exterior Construction', '9', '1' FROM Sessions WHERE name = '$sessionname';";
 
-            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Final Paint', '0' FROM ChecklistItems WHERE step = '9';";
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`, `session_id_fk`) SELECT id, 'Final Paint', '0', session_id FROM ChecklistItems WHERE step = '9';";
 
-            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Fixtures', '0' FROM ChecklistItems WHERE step = '9';";
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`, `session_id_fk`) SELECT id, 'Fixtures', '0', session_id FROM ChecklistItems WHERE step = '9';";
 
-            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Appliances', '0' FROM ChecklistItems WHERE step = '9';";
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`, `session_id_fk`) SELECT id, 'Appliances', '0', session_id FROM ChecklistItems WHERE step = '9';";
 
-            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Landscaping/Driveway', '0' FROM ChecklistItems WHERE step = '9';";
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`, `session_id_fk`) SELECT id, 'Landscaping/Driveway', '0', session_id FROM ChecklistItems WHERE step = '9';";
 
-            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Attic Insulation', '0' FROM ChecklistItems WHERE step = '9';";
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`, `session_id`) SELECT id, 'Attic Insulation', '0', session_id FROM ChecklistItems WHERE step = '9';";
 
             $query3 .= "INSERT INTO ChecklistItems (`session_id`, `description`, `step`, `hasSubs`) SELECT id, 'Obtain Certificate of Occupancy', '10', '0' FROM Sessions WHERE name = '$sessionname';";
 
@@ -114,11 +114,11 @@
 
             $query3 .= "INSERT INTO ChecklistItems (`session_id`, `description`, `step`, `hasSubs`) SELECT id, 'Rough-in Tasks', '4', '1' FROM Sessions WHERE name = '$sessionname';";
 
-            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Plumbing', '0' FROM ChecklistItems WHERE step = '4';";
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`, `session_id_fk`) SELECT id, 'Plumbing', '0', session_id FROM ChecklistItems WHERE step = '4';";
 
-            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Electrical', '0' FROM ChecklistItems WHERE step = '4';";
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`, `session_id_fk`) SELECT id, 'Electrical', '0', session_id FROM ChecklistItems WHERE step = '4';";
 
-            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'HVAC', '0' FROM ChecklistItems WHERE step = '4';";
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`, `session_id_fk`) SELECT id, 'HVAC', '0', session_id FROM ChecklistItems WHERE step = '4';";
 
             $query3 .= "INSERT INTO ChecklistItems (`session_id`, `description`, `step`, `hasSubs`) SELECT id, 'Insulation', '5', '0' FROM Sessions WHERE name = '$sessionname';";
 
@@ -128,23 +128,23 @@
 
             $query3 .= "INSERT INTO ChecklistItems (`session_id`,`description`, `step`, `hasSubs`) SELECT id, 'Primary Interior Construction', '8', '1' FROM Sessions WHERE name = '$sessionname';";
 
-            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Cabinets', '0' FROM ChecklistItems WHERE step = '8';";
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`, `session_id_fk`) SELECT id, 'Cabinets', '0', session_id FROM ChecklistItems WHERE step = '8';";
 
-            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Flooring', '0' FROM ChecklistItems WHERE step = '8';";
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`, `session_id_fk`) SELECT id, 'Flooring', '0', session_id FROM ChecklistItems WHERE step = '8';";
 
-            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Interior Trim/Doors', '0' FROM ChecklistItems WHERE step = '8';";
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`, `session_id_fk`) SELECT id, 'Interior Trim/Doors', '0', session_id FROM ChecklistItems WHERE step = '8';";
 
             $query3 .= "INSERT INTO ChecklistItems (`session_id`,`description`, `step`, `hasSubs`) SELECT id, 'Secondary Interior & Exterior Construction', '9', '1' FROM Sessions WHERE name = '$sessionname';";
 
-            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Final Paint', '0' FROM ChecklistItems WHERE step = '9';";
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`, `session_id_fk`) SELECT id, 'Final Paint', '0', session_id FROM ChecklistItems WHERE step = '9';";
 
-            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Fixtures', '0' FROM ChecklistItems WHERE step = '9';";
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`, `session_id_fk`) SELECT id, 'Fixtures', '0', session_id FROM ChecklistItems WHERE step = '9';";
 
-            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Appliances', '0' FROM ChecklistItems WHERE step = '9';";
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`, `session_id_fk`) SELECT id, 'Appliances', '0', session_id FROM ChecklistItems WHERE step = '9';";
 
-            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Landscaping/Driveway', '0' FROM ChecklistItems WHERE step = '9';";
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`, `session_id_fk`) SELECT id, 'Landscaping/Driveway', '0', session_id FROM ChecklistItems WHERE step = '9';";
 
-            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`) SELECT id, 'Attic Insulation', '0' FROM ChecklistItems WHERE step = '9';";
+            $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`, `session_id_fk`) SELECT id, 'Attic Insulation', '0', session_id FROM ChecklistItems WHERE step = '9';";
 
             $query3 .= "INSERT INTO ChecklistItems (`session_id`,`description`, `step`, `hasSubs`) SELECT id, 'Obtain Certificate of Occupancy', '10', '0' FROM Sessions WHERE name = '$sessionname';";
 
