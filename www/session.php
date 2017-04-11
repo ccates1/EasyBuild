@@ -262,7 +262,7 @@ if (empty($_SESSION['username'])) {
                   <h2>'.$checklistitemdesc.'</h2>
                   <p>
                   <div class="list-group">';
-                  $query3 = mysqli_query($dbc, "SELECT * FROM Subs WHERE checklistitem_id = '$step' AND isCompleted = '1' AND session_id_fk = '$session_id';");
+                  $query3 = mysqli_query($dbc, "SELECT * FROM Subs WHERE checklistitem_id = '$step' AND isCompleted = '1' AND session_id_fk = '$sessionid';");
                   if(mysqli_num_rows($query3) != 0) {
                     while($row = mysqli_fetch_array($query3)) {
                       $subdesc = $row['description'];
@@ -275,7 +275,7 @@ if (empty($_SESSION['username'])) {
                       </div>';
                     }
                   }
-                  $query4 = mysqli_query($dbc, "SELECT * FROM Subs WHERE checklistitem_id = '$step' AND isCompleted = '0' session_id_fk = '$session_id';");
+                  $query4 = mysqli_query($dbc, "SELECT * FROM Subs WHERE checklistitem_id = '$step' AND isCompleted = '0' AND session_id_fk = '$sessionid';");
                   if(mysqli_num_rows($query4) != 0) {
                     while($row = mysqli_fetch_array($query4)) {
                       $subdesc = $row['description'];
@@ -333,7 +333,7 @@ if (empty($_SESSION['username'])) {
                   <h2>'.$checklistitemdesc.'</h2>
                   <p>
                   <div class="list-group">';
-                  $query3 = mysqli_query($dbc, "SELECT * FROM Subs WHERE checklistitem_id = '$step' AND isCompleted = '1';");
+                  $query3 = mysqli_query($dbc, "SELECT * FROM Subs WHERE checklistitem_id = '$step' AND isCompleted = '1' AND session_id_fk = '$sessionid';");
                   if(mysqli_num_rows($query3) != 0) {
                     while($row = mysqli_fetch_array($query3)) {
                       $subindex++;
@@ -347,7 +347,7 @@ if (empty($_SESSION['username'])) {
                       </div>';
                     }
                   }
-                  $query4 = mysqli_query($dbc, "SELECT * FROM Subs WHERE checklistitem_id = '$step' AND isCompleted = '0';");
+                  $query4 = mysqli_query($dbc, "SELECT * FROM Subs WHERE checklistitem_id = '$step' AND isCompleted = '0' AND session_id_fk = '$sessionid';");
                   if(mysqli_num_rows($query4) != 0) {
                     while($row = mysqli_fetch_array($query4)) {
                       $subindex++;
