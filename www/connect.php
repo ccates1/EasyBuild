@@ -109,7 +109,7 @@ if (empty($_SESSION['username'])) {
                 </div>
                 </div>
                 <div class='text-center'>
-                <button type='submit' class='btn btn-success'>Send Connection! <i class='fa fa-envelope-o fa-fw'></i></button>
+                <button type='submit' class='btn btn-success'>Create Session! <i class='fa fa-envelope-o fa-fw'></i></button>
                 </div>
                 </div>
                 </form>

@@ -14,42 +14,54 @@ if (empty($_SESSION['username'])) {
     el.setAttribute = "checked";
     el.disabled = true;
   }
-  function clicked(id, desc, session, step) {
-    console.log(id);
-    var sessionid = session;
+  function clicked(id, desc, sessionid, step) {
+    var sessionid = sessionid;
     var step = step;
     var getid = id + 1;
-    var checkid = 'checkbox' + id;
-    document.getElementById(id).disabled = true;
-    document.getElementById(checkid.toString()).disabled = false;
-    document.getElementById(checkid).disabled = false;
-    document.getElementById(getid.toString()).classList.remove('disabler');
-    $.ajax({
-      type: 'POST',
-      url: 'completed.php',
-      data : 'rowdesc='+ desc + '&sessionid='+ session + '&step='+ step + '&hasSubs=0',
-      success: function(data) {
-        $('#modalPopup').modal('show');
-        $('#fetched-data').html(data);
-      }
-    });
-    window.location.reload();
+    var checkid = 'checkbox' + getid.toString();
+    if(step == "10") {
+      $.ajax({
+        type: 'POST',
+        url: 'completed.php',
+        data : 'rowdesc='+ desc + '&sessionid='+ sessionid + '&step='+ step,
+        success: function(data) {
+          $('completedModal').modal('show');
+        }
+      });
+    } else {
+      document.getElementById(id).disabled = true;
+      document.getElementById(checkid.toString()).disabled = false;
+      document.getElementById(checkid).disabled = false;
+      document.getElementById(getid.toString()).classList.remove('disabler');
+      $.ajax({
+        type: 'POST',
+        url: 'completed.php',
+        data : 'rowdesc='+ desc + '&sessionid='+ sessionid + '&step='+ step,
+        success: function(data) {
+          window.location.reload();
+          window.alert('Your next task is available');
+        }
+      });
+    }
   }
-  function subclicked(subid, checklistid, desc, session, step) {
-    var sessionid = session;
+  function subclicked(subid, id, checklistitemdesc, sessionid, step, subdesc) {
+    var sessionid = sessionid;
     var step = step;
-    var getid = checklistid + 1;
+    var getid = id + 1;
     var checkid = 'checkbox' + subid;
 
-    document.getElementById(subid).disabled = true;
+    document.getElementById(checkid.toString()).disabled = true;
 
     $.ajax({
       type: 'POST',
-      url: 'completed.php',
-      data : 'rowdesc='+ desc + '&sessionid='+ session + '&step='+ step + '&hasSubs=1',
+      url: 'subcompleted.php',
+      data : 'sessionid=' + sessionid + '&subdesc='+ subdesc + '&step=' + step,
       success: function(data) {
-        $('#modalPopup').modal('show');
-        $('#fetched-data').html(data);
+        console.log(data);
+        if(data == "completed") {
+          window.location.reload();
+        }
+        window.alert('Your next task is available');
       }
     });
 
@@ -164,6 +176,9 @@ if (empty($_SESSION['username'])) {
         if(!empty($_GET['id'])) {
           $query = mysqli_query($dbc, "SELECT * FROM Sessions INNER JOIN ChecklistItems ON Sessions.id = '$sessionid' AND ChecklistItems.session_id = '$sessionid' AND ChecklistItems.isCompleted = '0';");
           $query2 = mysqli_query($dbc, "SELECT * FROM Sessions INNER JOIN ChecklistItems ON Sessions.id = '$sessionid' AND ChecklistItems.session_id = '$sessionid' AND ChecklistItems.isCompleted = '1';");
+          $numcompleted = mysqli_num_rows($query);
+          $numnotcompleted = mysqli_num_rows($query2);
+          $totalitems = $numcompleted + $numnotcompleted;
           if(mysqli_num_rows($query) != 0 || mysqli_num_rows($query2) != 0) {
             $checkindex = -1;
             $index = -1;
@@ -174,35 +189,68 @@ if (empty($_SESSION['username'])) {
               $checklistitemdesc = $row['description'];
               $iscompleted = $row['isCompleted'];
               $hasSubs = $row['hasSubs'];
-              echo '<div class="cd-timeline-block">
-              <div class="cd-timeline-img cd-picture">
-              <img src="png/check.png" alt="">
-              </div>
-              <div class="cd-timeline-content">
-              <h2>'.$checklistitemdesc.'</h2>
-              <p>
-              <form>
-              <div class="md-form">
-              <input type="text" class="form-control" id="1-message" />
-              <label for="1-message">Leave Message:</label>
-              </div>
-              <div class="form-check">
-              <label class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" checked disabled="true" />
-              <span class="custom-control-indicator"></span>
-              <span class="custom-control-description" >Mark Completion</span>
-              </label>
-              </div>
-              </form>
-              </p>
-              <button type="button" class="cd-read-more btn btn-warning">Submit Message</button>
-              <span class="cd-date">Estimated Finish: Jan 2</span>
-              </div>
-              </div>';
+              $sessionid = $row['session_id'];
+              if($hasSubs == '1') {
+                echo '<div class="cd-timeline-block" id="'.$index.'">
+                <div class="cd-timeline-img cd-picture">
+                <img src="png/blank.png" alt="">
+                </div>
+                <div class="cd-timeline-content">
+                <h2>'.$checklistitemdesc.'</h2>
+                <p>
+                <div class="list-group">';
+                $query5 = mysqli_query($dbc, "SELECT * FROM Subs WHERE checklistitem_id = '$step' AND session_id_fk = '$sessionid';");
+                if(mysqli_num_rows($query5)) {
+                  while($row = mysqli_fetch_array($query5)) {
+                    $subdesc = $row['description'];
+                    echo '<div class="list-group-item justify-content-between">
+                    '.$subdesc.'
+                    <label class="custom-control custom-checkbox align-middle">
+                    <input type="checkbox" class="custom-control-input" checked disabled="true" />
+                    <span class="custom-control-indicator"></span>
+                    </label>
+                    </div>';
+                  }
+                  echo '</div>
+                  </p>
+                  <a href="#0" class="cd-read-more btn-info">Submit</a>
+                  <span class="cd-date">Estimated Finish: Jan 2</span>
+                  </div>
+                  </div>';
+                }
+              } else {
+                echo '<div class="cd-timeline-block">
+                <div class="cd-timeline-img cd-picture">
+                <img src="png/check.png" alt="">
+                </div>
+                <div class="cd-timeline-content">
+                <h2>'.$checklistitemdesc.'</h2>
+                <p>
+                <form>
+                <div class="md-form">
+                <input type="text" class="form-control" id="1-message" />
+                <label for="1-message">Leave Message:</label>
+                </div>
+                <div class="form-check">
+                <label class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" checked disabled="true" />
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description" >Mark Completion</span>
+                </label>
+                </div>
+                </form>
+                </p>
+                <button type="button" class="cd-read-more btn btn-warning">Submit Message</button>
+                <span class="cd-date">Estimated Finish: Jan 2</span>
+                </div>
+                </div>';
+              }
+
             }
             while($row = mysqli_fetch_array($query)) {
               $step = $row['step'];
               $checklistitemdesc = $row['description'];
+              $sessionid = $row['session_id'];
               $hasSubs = $row['hasSubs'];
               if($step != '1' && $index != -1) {
                 if($hasSubs == '1') {
@@ -214,12 +262,12 @@ if (empty($_SESSION['username'])) {
                   <h2>'.$checklistitemdesc.'</h2>
                   <p>
                   <div class="list-group">';
-                  $query3 = mysqli_query($dbc, "SELECT * FROM Subs WHERE checklistitem_id = '$step' AND isCompleted = '1';");
+                  $query3 = mysqli_query($dbc, "SELECT * FROM Subs WHERE checklistitem_id = '$step' AND isCompleted = '1' AND session_id_fk = '$session_id';");
                   if(mysqli_num_rows($query3) != 0) {
                     while($row = mysqli_fetch_array($query3)) {
-                      $subDescription = $row['description'];
+                      $subdesc = $row['description'];
                       echo '<div class="list-group-item justify-content-between">
-                      '.$subDescription.'
+                      '.$subdesc.'
                       <label class="custom-control custom-checkbox align-middle">
                       <input type="checkbox" class="custom-control-input" checked disabled="true" />
                       <span class="custom-control-indicator"></span>
@@ -227,12 +275,12 @@ if (empty($_SESSION['username'])) {
                       </div>';
                     }
                   }
-                  $query4 = mysqli_query($dbc, "SELECT * FROM Subs WHERE checklistitem_id = '$step' AND isCompleted = '0';");
+                  $query4 = mysqli_query($dbc, "SELECT * FROM Subs WHERE checklistitem_id = '$step' AND isCompleted = '0' session_id_fk = '$session_id';");
                   if(mysqli_num_rows($query4) != 0) {
                     while($row = mysqli_fetch_array($query4)) {
-                      $subDescription = $row['description'];
+                      $subdesc = $row['description'];
                       echo '<div class="list-group-item justify-content-between">
-                      '.$subDescription.'
+                      '.$subdesc.'
                       <label class="custom-control custom-checkbox ">
                       <input type="checkbox" class="custom-control-input"  />
                       <span class="custom-control-indicator"></span>
@@ -289,9 +337,9 @@ if (empty($_SESSION['username'])) {
                   if(mysqli_num_rows($query3) != 0) {
                     while($row = mysqli_fetch_array($query3)) {
                       $subindex++;
-                      $subDescription = $row['description'];
+                      $subdesc = $row['description'];
                       echo '<div class="list-group-item justify-content-between">
-                      '.$subDescription.'
+                      '.$subdesc.'
                       <label class="custom-control custom-checkbox">
                       <input type="checkbox" class="custom-control-input" checked disabled="true" />
                       <span class="custom-control-indicator" offset-margin"></span>
@@ -303,11 +351,11 @@ if (empty($_SESSION['username'])) {
                   if(mysqli_num_rows($query4) != 0) {
                     while($row = mysqli_fetch_array($query4)) {
                       $subindex++;
-                      $subDescription = $row['description'];
+                      $subdesc = $row['description'];
                       echo '<div class="list-group-item justify-content-between">
-                      '.$subDescription.'
+                      '.$subdesc.'
                       <label class="custom-control custom-checkbox">
-                      <input type="checkbox" class="custom-control-input" onclick="subclicked('.$subindex.', , \''.$index.'\', \''.$checklistitemdesc.'\', \''.$sessionid.'\', \''.$step.'\')" id="checkbox'.$subindex.'" />
+                      <input type="checkbox" class="custom-control-input" onclick="subclicked('.$subindex.', \''.$index.'\', \''.$checklistitemdesc.'\', \''.$sessionid.'\', \''.$step.'\', \''.$subdesc.'\')" id="checkbox'.$subindex.'" />
                       <span class="custom-control-indicator offset-margin"></span>
                       </label>
                       </div>';
@@ -354,19 +402,27 @@ if (empty($_SESSION['username'])) {
         }
         ?>
       </section> <!-- cd-timeline -->
-      <div class="modal fade" tabindex="-1" role="dialog" id="modalPopup">
-        <div class="modal-dialog modal-sm">
+      <div class="modal fade" id="completedModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <!--Content-->
           <div class="modal-content">
+            <!--Header-->
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Success!</h5>
-              <button type="button" class="close" data-dismiss="modal" >
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
               </button>
+              <h4 class="modal-title w-100" id="myModalLabel">Congratulations</h4>
             </div>
+            <!--Body-->
             <div class="modal-body">
-              <div id="fetched-data">
-              </div>
+              All items for the house construction checklist are now complete!
+            </div>
+            <!--Footer-->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-block btn-secondary" data-dismiss="modal">Close</button>
             </div>
           </div>
+          <!--/.Content-->
         </div>
       </div>
     </div>
@@ -375,10 +431,6 @@ if (empty($_SESSION['username'])) {
   <?php include('scripts.html'); ?>
   <script type="text/javascript">
   jQuery(document).ready(function($){
-
-    function clicked(id) {
-      console.log(id);
-    }
 
     var timelineBlocks = $('.cd-timeline-block'),
     offset = 0.8;
