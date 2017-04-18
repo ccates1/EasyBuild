@@ -98,6 +98,7 @@ if (empty($_SESSION['username'])) {
                 $sender = $row['sender'];
                 $user_type = $row['user_type'];
                 $content = $row['content'];
+                $date = strtotime($row['date']);
           ?>
             <div class="message-content">
               <div class="media">
@@ -113,7 +114,14 @@ if (empty($_SESSION['username'])) {
                   }
                 ?>
                 <div class="media-body">
-                  <h5 class="mt-0"><?php echo $sender; ?></h5>
+                  <div class="clearfix">
+                    <div class="pull-left">
+                      <h5 class="mt-0 text-primary"><i class="fa fa-user-circle-o fa-fw"></i> Posted By: <?php echo $sender; ?></h5>
+                    </div>
+                    <div class="pull-right">
+                      <p class="text-primary" style="font-size: 12px;"><i class="fa fa-clock-o fa-fw"></i> <?php echo date("F j, Y", $date); ?></p>
+                    </div>
+                  </div>
                   <p>
                     <?php echo $content; ?>
                   </p>
