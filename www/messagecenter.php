@@ -8,6 +8,34 @@ if (empty($_SESSION['username'])) {
 <html lang="en">
 <head>
   <?php include('head.html'); ?>
+  <script type="text/javascript">
+  jQuery(document).ready(function($){
+    $("#submit").click(function() {
+      var content = $("#content").val();
+      var sender = $("#sender").val();
+      var sessionid = $("#sessionid").val();
+      var type = $("#user_type").val();
+      console.log(sender);
+      if(content == "") {
+        $("#error").html('<div class="alert alert-danger" role="alert" style="margin-top: 10px;">' +
+        '<strong>' +
+        '<i class="fa fa-exclamation-triangle fa-fw"></i> Cannot submit a blank message!' +
+        '</strong>' +
+        '</div>');
+      } else {
+        $.ajax({
+          type: 'POST',
+          url: 'submitmessage.php',
+          data : 'sessionid='+ sessionid + '&sender='+ sender + '&content='+ content + '&user_type='+ type,
+          success: function(data) {
+              window.location.reload();
+              window.alert("Message posted successfully!");
+          }
+        });
+      }
+    })
+  });
+  </script>
 </head>
 <body>
   <?php include("nav.html"); ?>
@@ -16,6 +44,8 @@ if (empty($_SESSION['username'])) {
     <?php
       if(!empty($_GET['id'])) {
         $sessionid = $_GET['id'];
+        $user_type = $_SESSION['user_type'];
+        $sender = $_SESSION['username'];
         $query = mysqli_query($dbc, "SELECT Sessions.name, Sessions.id, Builders.username AS builderusername, Builders.email AS builderemail, Owners.username AS ownerusername, Owners.email AS owneremail FROM Sessions INNER JOIN Builders ON Builders.id = Sessions.builder_id INNER JOIN Owners ON Owners.id = Sessions.owner_id WHERE Sessions.id = '$sessionid'");
         if(mysqli_num_rows($query) != 0) {
           while($row = mysqli_fetch_array($query)) {
@@ -49,13 +79,17 @@ if (empty($_SESSION['username'])) {
           <ul class="media-list center-block">
             <div class="message-content">
               <h4 style="font-weight: 600">Post New Message:</h4>
-              <form id="message-form" method="post" action="message.php">
                 <div class="md-form" style="margin-top: 20px;">
                   <input type="text" id="content" name="content" class="form-control" />
                   <label for="content">Insert Message Here</label>
                 </div>
-                <button type="submit" class="btn btn-warning waves-effect">Submit</button>
-              </form>
+                <input type="hidden" class="hidden" id="sessionid" value="<?php echo $sessionid; ?>" />
+                <input type="hidden" class="hidden" id="sender" value="<?php echo $sender; ?>" />
+                <input type="hidden" class="hidden" id="user_type" value="<?php echo $user_type; ?>" />
+                <button type="button" id="submit" class="btn btn-warning waves-effect">Submit</button>
+                <div id ="error">
+
+                </div>
             </div>
           <?php
             $query = mysqli_query($dbc, "SELECT * FROM Messages WHERE session_id = '$sessionid';");
@@ -80,7 +114,9 @@ if (empty($_SESSION['username'])) {
                 ?>
                 <div class="media-body">
                   <h5 class="mt-0"><?php echo $sender; ?></h5>
-                  <?php echo $content; ?>
+                  <p>
+                    <?php echo $content; ?>
+                  </p>
                 </div>
               </div>
             </div>
@@ -99,7 +135,6 @@ if (empty($_SESSION['username'])) {
       </div>
     </div>
   </div>
-
   <?php include('scripts.html'); ?>
 </body>
 
