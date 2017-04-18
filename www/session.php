@@ -25,7 +25,8 @@ if (empty($_SESSION['username'])) {
         url: 'completed.php',
         data : 'rowdesc='+ desc + '&sessionid='+ sessionid + '&step='+ step,
         success: function(data) {
-          $('completedModal').modal('show');
+          window.location.reload();
+          window.alert("Congratulations, all items are not complete!");
         }
       });
     } else {
@@ -39,7 +40,6 @@ if (empty($_SESSION['username'])) {
         data : 'rowdesc='+ desc + '&sessionid='+ sessionid + '&step='+ step,
         success: function(data) {
           window.location.reload();
-          window.alert('Your next task is available');
         }
       });
     }
@@ -57,11 +57,13 @@ if (empty($_SESSION['username'])) {
       url: 'subcompleted.php',
       data : 'sessionid=' + sessionid + '&subdesc='+ subdesc + '&step=' + step,
       success: function(data) {
-        console.log(data);
         if(data == "completed") {
           window.location.reload();
+          window.alert('Your next task is available');
+        } else {
+          window.location.reload();
+          window.alert("More items to mark complete before next task is available");
         }
-        window.alert('Your next task is available');
       }
     });
 
@@ -84,17 +86,17 @@ if (empty($_SESSION['username'])) {
           $ownername = $row['ownerusername'];
           $owneremail = $row['owneremail'];
         }
-    ?>
-    <div class="container">
-      <div class="card">
-        <div class="card-header white-text bg-primary">
-          <i class="fa fa-info-circle fa-fw"></i> <?php echo $sessionname; ?>
-        </div>
-        <div class="card-block bg-faded">
-          <?php
+        ?>
+        <div class="container">
+          <div class="card">
+            <div class="card-header white-text bg-primary">
+              <i class="fa fa-list fa-lg" style="vertical-align:middle"></i> Session Checklist
+            </div>
+            <div class="card-block bg-faded">
+              <?php
               echo '<div class="card-deck">
               <div class="card">
-              <div class="card-block white-text warning-color">
+              <div class="card-block white-text bg-primary">
               <h4 class="card-title">Builder Information <i class="fa fa-wrench fa-fw"></i></h4>
               <div class="list-group list-group-flush card-body" style="color:#2d2e2e;">
               <div class="list-group-item">
@@ -128,39 +130,41 @@ if (empty($_SESSION['username'])) {
               <div class="row">
                 <div class="col-md-4">
                   <div class="card equal">
-                    <div class="card-block danger-color text-center white-text">
+                    <div class="card-block bg-primary text-center white-text">
+                      <h4 class="card-title">
+                        Message Center
+                      </h4>
+                      <p class="card-text">
+                        <a role="button" class="btn btn-outline btn-outline-primary waves-effect btn-sm" href="messagecenter.php?id=<?php echo $sessionid; ?>">Access</a>
+                      </p>
+                    </div>
+                    <div class="card-footer primary-color-dark text-center" id="footer">
+                      <small class="ellipsis white-text">Last updated 3 mins ago</small>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="card equal">
+                    <div class="card-block bg-primary text-center white-text">
                       <h4 class="card-title">Inventory</h4>
                       <p class="card-text">
-                        <button type="button" class="btn btn-outline btn-outline-danger waves-effect btn-sm">Access</button>
+                        <button type="button" class="btn btn-outline btn-outline-primary waves-effect btn-sm">Access</button>
                       </p>
                     </div>
-                    <div class="card-footer danger-color-dark" id="footer">
+                    <div class="card-footer primary-color-dark text-center" id="footer">
                       <small class="ellipsis white-text">Last updated 3 mins ago</small>
                     </div>
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="card equal">
-                    <div class="card-block info-color text-center white-text">
-                      <h4 class="card-title">Order Status</h4>
+                    <div class="card-block bg-primary text-center white-text">
+                      <h4 class="card-title">Reciepts/Budget</h4>
                       <p class="card-text">
-                        <button type="button" class="btn btn-outline btn-outline-info waves-effect btn-sm">Access</button>
+                        <button type="button" class="btn btn-outline btn-outline-primary waves-effect btn-sm">Access</button>
                       </p>
                     </div>
-                    <div class="card-footer info-color-dark" id="footer">
-                      <small class="ellipsis white-text">Last updated 3 mins ago</small>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="card equal">
-                    <div class="card-block success-color text-center white-text">
-                      <h4 class="card-title">Floor Plan</h4>
-                      <p class="card-text">
-                        <button type="button" class="btn btn-outline btn-outline-success waves-effect btn-sm">Access</button>
-                      </p>
-                    </div>
-                    <div class="card-footer success-color-dark" id="footer">
+                    <div class="card-footer primary-color-dark text-center" id="footer">
                       <small class="ellipsis white-text">Last updated 3 mins ago</small>
                     </div>
                   </div>
@@ -168,17 +172,43 @@ if (empty($_SESSION['username'])) {
               </div>
             </div>
           </div>
+          <?php
+          if(!empty($_GET['id'])) {
+            $query = mysqli_query($dbc, "SELECT * FROM Sessions INNER JOIN ChecklistItems ON Sessions.id = '$sessionid' AND ChecklistItems.session_id = '$sessionid' AND ChecklistItems.isCompleted = '0';");
+            $query2 = mysqli_query($dbc, "SELECT * FROM Sessions INNER JOIN ChecklistItems ON Sessions.id = '$sessionid' AND ChecklistItems.session_id = '$sessionid' AND ChecklistItems.isCompleted = '1';");
+            $numnotcompleted = mysqli_num_rows($query);
+            $numcompleted = mysqli_num_rows($query2);
+            $totalitems = $numcompleted + $numnotcompleted;
+            $scale = 1.0;
+            $value = 40;
+            $max = 150;
+            $scale = 1.0;
+            if (!empty($totalitems)) {
+              $percent = ($numcompleted * 100) / $totalitems;
+            }
+            else {
+              $percent = 0;
+            }
+          ?>
+          <hr />
+          <blockquote class="blockquote bq-primary">
+              <p class="bq-title"><i class="fa fa-info-circle fa-fw"></i> <?php echo $sessionname; ?></p>
+              <p>This is your collaboration page for both parties involved within the home construction
+                process. Builders are able to mark the completion of each item.</p>
+                <div class="text-center" style="margin-top:15px;">
+                  <h4 class="primary-text"><?php echo $numcompleted;?> of <?php echo $totalitems;?> Checklist Items Completed</h4>
+                  <div class="progress">
+                    <div class="progress-bar" style="width:<?php echo round($percent * $scale); ?>%;"></div>
+                  </div>
+                </div>
+          </blockquote>
+
+
         </div>
       </div>
 
       <section id="cd-timeline" class="cd-container">
         <?php
-        if(!empty($_GET['id'])) {
-          $query = mysqli_query($dbc, "SELECT * FROM Sessions INNER JOIN ChecklistItems ON Sessions.id = '$sessionid' AND ChecklistItems.session_id = '$sessionid' AND ChecklistItems.isCompleted = '0';");
-          $query2 = mysqli_query($dbc, "SELECT * FROM Sessions INNER JOIN ChecklistItems ON Sessions.id = '$sessionid' AND ChecklistItems.session_id = '$sessionid' AND ChecklistItems.isCompleted = '1';");
-          $numcompleted = mysqli_num_rows($query);
-          $numnotcompleted = mysqli_num_rows($query2);
-          $totalitems = $numcompleted + $numnotcompleted;
           if(mysqli_num_rows($query) != 0 || mysqli_num_rows($query2) != 0) {
             $checkindex = -1;
             $index = -1;
@@ -226,11 +256,6 @@ if (empty($_SESSION['username'])) {
                 <div class="cd-timeline-content">
                 <h2>'.$checklistitemdesc.'</h2>
                 <p>
-                <form>
-                <div class="md-form">
-                <input type="text" class="form-control" id="1-message" />
-                <label for="1-message">Leave Message:</label>
-                </div>
                 <div class="form-check">
                 <label class="custom-control custom-checkbox">
                 <input type="checkbox" class="custom-control-input" checked disabled="true" />
@@ -238,9 +263,7 @@ if (empty($_SESSION['username'])) {
                 <span class="custom-control-description" >Mark Completion</span>
                 </label>
                 </div>
-                </form>
                 </p>
-                <button type="button" class="cd-read-more btn btn-warning">Submit Message</button>
                 <span class="cd-date">Estimated Finish: Jan 2</span>
                 </div>
                 </div>';
@@ -303,11 +326,6 @@ if (empty($_SESSION['username'])) {
                   <div class="cd-timeline-content">
                   <h2>'.$checklistitemdesc.'</h2>
                   <p>
-                  <form>
-                  <div class="md-form">
-                  <input type="text" class="form-control" id="1-message"/>
-                  <label for="1-message">Leave Message:</label>
-                  </div>
                   <div class="form-check">
                   <label class="custom-control custom-checkbox">
                   <input type="checkbox" class="custom-control-input" onclick="clicked('.$index.', \''.$checklistitemdesc.'\', \''.$sessionid.'\', \''.$step.'\')" id="checkbox'.$index.'" disabled>
@@ -315,7 +333,6 @@ if (empty($_SESSION['username'])) {
                   <span class="custom-control-description">Mark Completion</span>
                   </label>
                   </div>
-                  </form>
                   </p>
                   <button type="button" class="cd-read-more btn btn-warning" disabled>Submit Message</button>
                   <span class="cd-date">Estimated Finish: Jan 2</span>
@@ -376,11 +393,6 @@ if (empty($_SESSION['username'])) {
                   <div class="cd-timeline-content">
                   <h2>'.$checklistitemdesc.'</h2>
                   <p>
-                  <form>
-                  <div class="md-form">
-                  <input type="text" class="form-control" id="1-message" />
-                  <label for="1-message">Leave Message:</label>
-                  </div>
                   <div class="form-check">
                   <label class="custom-control custom-checkbox">
                   <input type="checkbox" class="custom-control-input" onclick="clicked('.$index.', \''.$checklistitemdesc.'\', \''.$sessionid.'\', \''.$step.'\'); disable(this);" id="checkbox'.$index.'">
@@ -388,9 +400,7 @@ if (empty($_SESSION['username'])) {
                   <span class="custom-control-description" >Mark Completion</span>
                   </label>
                   </div>
-                  </form>
                   </p>
-                  <button type="button" class="cd-read-more btn btn-warning">Submit Message</button>
                   <span class="cd-date">Estimated Finish: Jan 2</span>
                   </div>
                   </div>';
@@ -402,31 +412,19 @@ if (empty($_SESSION['username'])) {
         }
         ?>
       </section> <!-- cd-timeline -->
-      <div class="modal fade" id="completedModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <!--Content-->
-          <div class="modal-content">
-            <!--Header-->
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-              <h4 class="modal-title w-100" id="myModalLabel">Congratulations</h4>
-            </div>
-            <!--Body-->
-            <div class="modal-body">
-              All items for the house construction checklist are now complete!
-            </div>
-            <!--Footer-->
-            <div class="modal-footer">
-              <button type="button" class="btn btn-block btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-          </div>
-          <!--/.Content-->
-        </div>
-      </div>
     </div>
   </div>
+  <?php
+  if($_SESSION['user_type'] == "owner") {
+    ?>
+    <script type="text/javascript">
+    $( ".form-check" ).each(function() {
+      $( this ).hide();
+    });
+    </script>
+    <?php
+  }
+  ?>
 
   <?php include('scripts.html'); ?>
   <script type="text/javascript">
