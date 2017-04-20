@@ -7,6 +7,7 @@ if (empty($_SESSION['username'])) {
 ?>
 <html lang="en">
 <head>
+  <link rel="stylesheet" type="text/css" href="css/paint.css">
   <?php include('head.html'); ?>
   <script type="text/javascript">
   function disable (el) {
@@ -144,7 +145,7 @@ if (empty($_SESSION['username'])) {
                     <div class="card-block bg-primary text-center white-text">
                       <h4 class="card-title">Inventory</h4>
                       <p class="card-text">
-                        <a role="button" class="btn btn-outline btn-outline-primary waves-effect btn-sm" href="inventory.php">Access</a>
+                        <a role="button" class="btn btn-outline btn-outline-primary waves-effect btn-sm" href="inventory.php?id=<?php echo $sessionid; ?>">Access</a>
                       </p>
                     </div>
                     <div class="card-footer primary-color-dark text-center" id="footer">
@@ -309,13 +310,10 @@ if (empty($_SESSION['username'])) {
                     </div>';
                   }
                 } else {
-                    
+
                     //Paint PART
                       if($step == '7') {
-                                                    
-                          echo '<link rel="stylesheet" type="text/css" href="css/paint.css">';
-                          
-                        
+
                           echo '<div class="cd-timeline-block" id="paintId" ><!--disabler-->
                                   <div class="cd-timeline-img cd-picture">
                                     <img src="png/blank.png" alt="">
@@ -325,17 +323,17 @@ if (empty($_SESSION['username'])) {
                                     <p>
                                     <form>
                                         <div class="md-form">';
-                     
-                          
+
+
                           $queryPaint = mysqli_query($dbc, "SELECT * FROM Paint");
-                          
+
                           $count = 0;
                           while($row = mysqli_fetch_array($queryPaint)) {
                               $paintDescription = $row['Description'];
                               $paintId = $row['id'];
-                            
-                              $count++; 
-                              
+
+                              $count++;
+
                             echo "<br />";
 
                             echo '<div class="card">
@@ -350,8 +348,8 @@ if (empty($_SESSION['username'])) {
                             <br />
 
                             <h4 id="clrPickId"> </h4>
-                               
-                                
+
+
                             <!-- Modal -->
                             <div id="myModal" class="modal fade" role="dialog">
                               <div class="modal-dialog">
@@ -458,7 +456,7 @@ if (empty($_SESSION['username'])) {
                             </div>
                             </div>';
                           }//Close While Loop
-                                
+
                             echo '</div><!--END FORM-->
                             <div class="form-check">
                               <label class="form-check-label">
@@ -470,12 +468,12 @@ if (empty($_SESSION['username'])) {
                         </p>
                         <a href="#0" class="cd-read-more btn-info">Submit</a>
                         <span class="cd-date">Estimated Finish: Jan 2</span>
-                        
+
                       </div>
                     </div>';
                       }
-                    
-                    
+
+
                   $index++;
                   echo '<div class="cd-timeline-block disabler" id="'.$index.'">
                   <div class="cd-timeline-img cd-picture">
@@ -561,7 +559,7 @@ if (empty($_SESSION['username'])) {
                   </div>
                   </div>';
                 }
-                  
+
               }
             }
           }
