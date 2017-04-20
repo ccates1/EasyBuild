@@ -156,9 +156,9 @@ if (empty($_SESSION['username'])) {
                 <div class="col-md-4">
                   <div class="card equal">
                     <div class="card-block bg-primary text-center white-text">
-                      <h4 class="card-title">Paint Colors</h4>
+                      <h4 class="card-title">Reciepts/Budget</h4>
                       <p class="card-text">
-                        <a role="button" class="btn btn-outline btn-outline-primary waves-effect btn-sm" href="paint.php">Access</a>
+                        <button type="button" class="btn btn-outline btn-outline-primary waves-effect btn-sm">Access</button>
                       </p>
                     </div>
                     <div class="card-footer primary-color-dark text-center" id="footer">
@@ -314,7 +314,173 @@ if (empty($_SESSION['username'])) {
                     </div>';
                   }
                 } else {
-  
+                    
+                    //Paint PART
+                      if($step == '7') {
+                                                    
+                          echo '<link rel="stylesheet" type="text/css" href="css/paint.css">';
+                          
+                        
+                          echo '<div class="cd-timeline-block" id="paintId" ><!--disabler-->
+                                  <div class="cd-timeline-img cd-picture">
+                                    <img src="png/blank.png" alt="">
+                                  </div>
+                                  <div class="cd-timeline-content">
+                                    <h2>'.$checklistitemdesc.'</h2>
+                                    <p>
+                                    <form>
+                                        <div class="md-form">';
+                     
+                          
+                          $queryPaint = mysqli_query($dbc, "SELECT * FROM Paint");
+                          
+                          $count = 0;
+                          while($row = mysqli_fetch_array($queryPaint)) {
+                              $paintDescription = $row['Description'];
+                              $paintId = $row['id'];
+                            
+                              $count++; 
+                              
+                            echo "<br />";
+
+                            echo '<div class="card">
+                            <div class="card-block">
+                            <div class="card-title text-center"><h4>
+                            '.$paintDescription.'</h4>
+                            <br />
+                            </div>
+
+                            <button type="button" class="btn btn-info btn-md" id="pBtn'.$count.'"  data-toggle="modal" data-target="#myModal" style="margin: 0 auto; display: block;" >Choose Color</button>
+
+                            <br />
+
+                            <h4 id="clrPickId"> </h4>
+                               
+                                
+                            <!-- Modal -->
+                            <div id="myModal" class="modal fade" role="dialog">
+                              <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                                    <script>
+
+                                    var getId = document.getElementById("pBtn'.$count.'");
+                                    getId.onclick = function() {
+
+                                       $.ajax({
+                                        type: "GET",
+                                        url: "getCount.php",
+                                        data: {counter:  '.$count.'},
+                                        success: function(data) {
+                                          //  alert(data);
+                                        }
+                                    });
+
+                                    if('.$count.' == 1) {
+                                  //  alert("Button1");
+                                    document.getElementById("modalTitleId").innerHTML="'.$paintDescription.'";
+                                    }
+                                    if('.$count.' == 2) {
+                                   // alert("Button2");
+                                    document.getElementById("modalTitleId").innerHTML="'.$paintDescription.'";
+                                    }
+                                    if('.$count.' == 3) {
+                                  //  alert("Button3");
+                                    document.getElementById("modalTitleId").innerHTML="'.$paintDescription.'";
+                                    }
+                                     if('.$count.' == 4) {
+                                   //  alert("Button4");
+                                     document.getElementById("modalTitleId").innerHTML="'.$paintDescription.'";
+                                    }
+                                    if('.$count.' == 5) {
+                                   //  alert("Button5");
+                                     document.getElementById("modalTitleId").innerHTML="'.$paintDescription.'";
+                                    }
+                                     if('.$count.' == 6) {
+                                   //  alert("Button6");
+                                     document.getElementById("modalTitleId").innerHTML="'.$paintDescription.'";
+                                    }
+                                    if('.$count.' == 7) {
+                                   //  alert("Button7");
+                                     document.getElementById("modalTitleId").innerHTML="'.$paintDescription.'";
+                                    }
+
+                                    };
+
+                                </script>
+
+                                <h3 class="modal-title" id="modalTitleId"></h3>
+                                  </div>
+                                  <div class="modal-body" id="showModal">
+
+
+                                    <script src="js/color.js"></script>
+
+                                    <h4><b>Color: <span id="colorChoice"></span></b></h4>
+
+                                        <div style="cursor: pointer; background-color: tan; width: 40px; height: 40px; border-radius: 50%; color: red; " type="color-picker" value=""></div>
+
+                                        <div style="display:none;" id="extraSpace">
+                                            <br /><br /><br />
+                                        </div>
+                                  </div>
+
+                                  <div class="modal-footer">
+
+                                    <button type="button" class="btn btn-info " id="subBtn'.$count.'" data-dismiss="modal" >Submit</button>
+
+                                    <script>
+
+                                    var getSubmitId = document.getElementById("subBtn'.$count.'");
+
+                                    getSubmitId.onclick = function() {
+
+                                    var chosenColor = document.getElementById("colorChoice").innerHTML;
+
+                                       $.ajax({
+                                        type: "GET",
+                                        url: "insertColors.php",
+                                        data: {color:  chosenColor},
+                                        success: function(data) {
+                                           // alert(data);
+                                            $("#clrPickId").text("Color: " + document.getElementById("colorChoice").innerHTML);
+                                        }
+                                    });
+                                    }
+
+                                    </script>
+
+                                  </div>
+                                </div><!--Close Modal-->
+                                </div>
+                            </div>
+                            <p class="card-body">
+                            </p>
+                            </div>
+                            </div>';
+                          }//Close While Loop
+                                
+                            echo '</div><!--END FORM-->
+                            <div class="form-check">
+                              <label class="form-check-label">
+                                <input class="form-check-input" type="checkbox" />
+                                Mark Completion
+                              </label>
+                            </div>
+                          </form>
+                        </p>
+                        <a href="#0" class="cd-read-more btn-info">Submit</a>
+                        <span class="cd-date">Estimated Finish: Jan 2</span>
+                        
+                      </div>
+                    </div>';
+                      }
+                    
+                    
                   $index++;
                   echo '<div class="cd-timeline-block disabler" id="'.$index.'">
                   <div class="cd-timeline-img cd-picture">
