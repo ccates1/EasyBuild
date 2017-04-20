@@ -9,16 +9,23 @@ html {
   min-height: 100% !important;
 }
 .message-content h5, .message-content p {
-      color: #303e49;
+  color: #303e49;
 }
 .message-content {
   border: 1px solid #ebebeb !important;
+}
+.bg-warning-custom {
+  background-color: #FF8800 !important;
+}
+.underly-shadow {
+  -webkit-box-shadow: 0 8px 6px -6px black !important;
+  -moz-box-shadow: 0 8px 6px -6px black !important;
+  box-shadow: 0 8px 6px -6px black !important;
 }
 #account-details > .list-group-item {
   margin-left: 5px;
   margin-right: 5px;
   border-radius: 50px;
-  font-weight: bold;
 }
 .no-padding {
   padding-right: 0 !important;

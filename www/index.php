@@ -39,7 +39,7 @@ session_start();
                   Are you a home owner or builder?
                 </legend>
                 <div class="btn-group" data-toggle="buttons">
-                  <label class="btn btn-primary">
+                  <label class="btn btn-primary" style="box-shadow: 0px;">
                     <input type="radio" name="user_type" id="builder" value="builder">Builder <i class="fa fa-wrench fa-fw"></i>
                   </label>
                   <label class="btn btn-primary">
