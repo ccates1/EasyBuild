@@ -249,12 +249,34 @@ header h1 {
   padding: 1em;
   box-shadow: 0 3px 0 #d7e4ed;
 }
+
+.message-content {
+  position: relative;
+  background: white;
+  border-radius: 0.25em;
+  padding: 1em;
+  box-shadow: 0 3px 0 #d7e4ed;
+  margin-top:20px;
+
+}
+.message-content::before {
+    content: '';
+    position: absolute;
+    top: 16px;
+    right: 100%;
+    height: 0;
+    width: 0;
+    border: 7px solid transparent;
+    border-right: 7px solid white;
+}
+
+
 .cd-timeline-content:after {
   content: "";
   display: table;
   clear: both;
 }
-.cd-timeline-content h2 {
+.cd-timeline-content h2, .message-content h4 {
   color: #303e49;
 }
 .cd-timeline-content p, .cd-timeline-content .cd-read-more, .cd-timeline-content .cd-date {

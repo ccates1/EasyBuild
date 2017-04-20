@@ -1,16 +1,28 @@
 body {
   font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif !important;
-    font-style: normal;
-    font-weight: 400;
-    min-height: 100% !important;
-    width: 100% !important;
+  font-style: normal;
+  font-weight: 400;
+  min-height: 100% !important;
+  width: 100% !important;
 }
 html {
   min-height: 100% !important;
 }
+.message-content h5, .message-content p {
+      color: #303e49;
+}
+.message-content {
+  border: 1px solid #ebebeb !important;
+}
+#account-details > .list-group-item {
+  margin-left: 5px;
+  margin-right: 5px;
+  border-radius: 50px;
+  font-weight: bold;
+}
 .no-padding {
   padding-right: 0 !important;
-padding-left: 0 !important;
+  padding-left: 0 !important;
 }
 .card-body-flush {
   padding: 0px !important;
@@ -27,7 +39,7 @@ td {
   background-color: #0275d8 !important;
 }
 .disabler {
-    opacity: 0.5;
+  opacity: 0.5;
 }
 .navbar-brand {
   margin-top: 0.50em !important;
@@ -51,9 +63,9 @@ small {
   font-size: 50% !important;
 }
 .ellipsis {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 #footer {
   padding: 0.75rem 1.25rem !important;
@@ -83,11 +95,11 @@ small {
   display: block !important;
 }
 .btn-rounded {
-    -webkit-border-radius: 10em;
-    -moz-border-radius: 10em;
-    -ms-border-radius: 10em;
-    -o-border-radius: 10em;
-    border-radius: 10em !important;
+  -webkit-border-radius: 10em;
+  -moz-border-radius: 10em;
+  -ms-border-radius: 10em;
+  -o-border-radius: 10em;
+  border-radius: 10em !important;
 }
 legend {
   display: block;
@@ -129,6 +141,26 @@ legend {
   margin-top: 2em;
   margin-bottom: 2em;
 }
+.primary-text {
+  color: #4285F4 !important;
+}
+.divider-new {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  font-weight: 300;
+  margin-top: 45px;
+  margin-bottom: 45px;
+}
 #cd-timeline::before {
   /* this is the vertical line */
   content: '';
@@ -138,4 +170,29 @@ legend {
   height: 100%;
   width: 4px;
   background: #d7e4ed;
+}
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.428571429;
+  border-radius: 15px;
+}
+.btn-circle.btn-lg {
+  width: 50px;
+  height: 50px;
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 1.33;
+  border-radius: 25px;
+}
+.btn-circle.btn-xl {
+  width: 70px;
+  height: 70px;
+  padding: 10px 16px;
+  font-size: 24px;
+  line-height: 1.33;
+  border-radius: 35px;
 }

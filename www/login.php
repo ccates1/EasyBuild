@@ -19,6 +19,7 @@
           $dbusername = $row['username'];
           $dbid = $row['id'];
           $dbpassword = $row['password'];
+          $dbemail = $row['email'];
         }
         if($username == $dbusername) {
           if($password == $dbpassword) {
@@ -29,6 +30,7 @@
             }
             $_SESSION['username'] = $username;
             $_SESSION['user_id'] = $dbid;
+            $_SESSION['email'] = $dbemail;
             header('location: home.php');
           } else {
             $errors[] = "Invalid password!";
