@@ -1,0 +1,11 @@
+.container-closed  {
+    
+    overflow:hidden; 
+    height:280px;
+    
+}
+
+.container {
+    overflow:auto; 
+    height:auto; 
+}
