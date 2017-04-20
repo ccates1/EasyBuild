@@ -17,7 +17,7 @@ if (empty($_SESSION['username'])) {
       <div class="row justify-content-center">
         <div class="card">
           <div class="card-header bg-primary white-text">
-            <h4>Welcome, <?php echo "".$_SESSION['username'].""; ?> <i class="fa fa-user-circle-o fa-fw"></i></h4>
+            <h4><i class="fa fa-user-circle-o fa-fw"></i> Welcome, <?php echo "".$_SESSION['username'].""; ?></h4>
           </div>
           <div class="card-body" style="padding: 15px;">
             <?php
@@ -42,10 +42,10 @@ if (empty($_SESSION['username'])) {
                       Session Name <i class="white-text fa fa-info-circle fa-fw"></i>
                     </th>
                     <th class="text-center">
-                      Connected User
+                      Connected User <i class="white-text fa fa-handshake-o fa-fw"></i>
                     </th>
                     <th class="text-center">
-                      Connected User Email
+                      Connected User Email <i class="white-text fa fa-at fa-fw"></i>
                     </th>
                     <th>
                     </th>

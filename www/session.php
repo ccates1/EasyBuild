@@ -87,7 +87,7 @@ if (empty($_SESSION['username'])) {
         <div class="container">
           <div class="card">
             <div class="card-header white-text bg-primary">
-              <i class="fa fa-list fa-lg" style="vertical-align:middle"></i> Session Checklist
+              <h4><i class="fa fa-list fa-lg" style="vertical-align:middle"></i> Session Checklist</h4>
             </div>
             <div class="card-block bg-faded">
               <?php
@@ -136,7 +136,6 @@ if (empty($_SESSION['username'])) {
                       </p>
                     </div>
                     <div class="card-footer primary-color-dark text-center" id="footer">
-                      <small class="ellipsis white-text">Last updated 3 mins ago</small>
                     </div>
                   </div>
                 </div>
@@ -145,11 +144,10 @@ if (empty($_SESSION['username'])) {
                     <div class="card-block bg-primary text-center white-text">
                       <h4 class="card-title">Inventory</h4>
                       <p class="card-text">
-                        <button type="button" class="btn btn-outline btn-outline-primary waves-effect btn-sm">Access</button>
+                        <a role="button" class="btn btn-outline btn-outline-primary waves-effect btn-sm" href="inventory.php">Access</a>
                       </p>
                     </div>
                     <div class="card-footer primary-color-dark text-center" id="footer">
-                      <small class="ellipsis white-text">Last updated 3 mins ago</small>
                     </div>
                   </div>
                 </div>
@@ -162,7 +160,6 @@ if (empty($_SESSION['username'])) {
                       </p>
                     </div>
                     <div class="card-footer primary-color-dark text-center" id="footer">
-                      <small class="ellipsis white-text">Last updated 3 mins ago</small>
                     </div>
                   </div>
                 </div>
@@ -240,7 +237,6 @@ if (empty($_SESSION['username'])) {
                   }
                   echo '</div>
                   </p>
-                  <a href="#0" class="cd-read-more btn-info">Submit</a>
                   <span class="cd-date">Estimated Finish: Jan 2</span>
                   </div>
                   </div>';
@@ -308,7 +304,6 @@ if (empty($_SESSION['username'])) {
                     }
                     echo '</div>
                     </p>
-                    <a href="#0" class="cd-read-more btn-info">Submit</a>
                     <span class="cd-date">Estimated Finish: Jan 2</span>
                     </div>
                     </div>';
@@ -331,7 +326,6 @@ if (empty($_SESSION['username'])) {
                   </label>
                   </div>
                   </p>
-                  <button type="button" class="cd-read-more btn btn-warning" disabled>Submit Message</button>
                   <span class="cd-date">Estimated Finish: Jan 2</span>
                   </div>
                   </div>';
@@ -377,7 +371,6 @@ if (empty($_SESSION['username'])) {
                   }
                   echo '</div>
                   </p>
-                  <a href="#0" class="cd-read-more btn-info">Submit</a>
                   <span class="cd-date">Estimated Finish: Jan 2</span>
                   </div>
                   </div>';

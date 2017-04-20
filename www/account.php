@@ -16,17 +16,17 @@ if (empty($_SESSION['username'])) {
     <div class="page-content" >
       <div class="card">
         <div class="card-header white-text bg-primary">
-          <i class="fa fa-info fa-fw"></i> Account Information
+          <h4><i class="fa fa-info fa-fw"></i> Account Information</h4>
         </div>
         <div class="card-block">
           <div class="row" style="margin-bottom: 10px;" id="account-details">
-            <div class="col list-group-item bg-warning white-text">
+            <div class="col list-group-item bg-warning-custom white-text underly-shadow">
               <i class="fa fa-user-circle-o fa-fw"></i> Username: <?php echo $_SESSION['username']; ?>
             </div>
-            <div class="col list-group-item bg-warning white-text">
+            <div class="col list-group-item bg-warning-custom white-text underly-shadow">
               <i class="fa fa-at fa-fw"></i> Email: <?php echo $_SESSION['email']; ?>
             </div>
-            <div class="col list-group-item bg-warning white-text">
+            <div class="col list-group-item bg-warning-custom white-text underly-shadow">
               <i class="fa fa-star fa-fw"></i> Type of User: <?php echo $_SESSION['user_type']; ?>
             </div>
           </div>

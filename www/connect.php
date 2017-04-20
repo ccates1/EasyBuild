@@ -15,7 +15,7 @@ if (empty($_SESSION['username'])) {
     <div class="page-content">
       <div class="card">
         <div class="card-header bg-primary white-text">
-          Session Creation
+          <h4><i class="fa fa-plus-square-o fa-fw"></i> Session Creation</h4>
         </div>
         <div class="card-block">
           <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="searchForm">
