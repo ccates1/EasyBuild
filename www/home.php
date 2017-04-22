@@ -36,7 +36,7 @@ if (empty($_SESSION['username'])) {
                 Your Active Sessions
               </legend>
               <table class="table table-bordered">
-                <thead class="warning-color white-text">
+                <thead class="bg-primary white-text">
                   <tr>
                     <th class="text-center">
                       Session Name <i class="white-text fa fa-info-circle fa-fw"></i>
@@ -66,7 +66,7 @@ if (empty($_SESSION['username'])) {
                     </td>
                     <td>
                       <?php $sessionidentifier = $row['id']; ?>
-                      <a role="button" class="btn btn-outline btn-outline-warning waves-effect" href="session.php?id=<?php echo $sessionidentifier; ?>">GO</a>
+                      <a role="button" class="btn btn-outline btn-outline-primary waves-effect btn-sm" href="session.php?id=<?php echo $sessionidentifier; ?>">GO</a>
                     </td>
                   </tr>
                   <?php } } else {
