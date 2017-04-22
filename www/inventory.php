@@ -107,6 +107,11 @@ if (empty($_SESSION['username'])) {
     }
     ?>
     <div class="container">
+      <div class="text-left" style="margin-bottom: 10px;">
+        <?php
+        echo "<a class='text-primary' href=\"javascript:history.go(-1)\"><i class='fa fa-arrow-circle-o-left fa-fw'></i> GO BACK</a>";
+        ?>
+      </div>
       <div class="card">
         <div class="card-header bg-primary white-text">
           <h4><i class="fa fa-check-square-o fa-fw"></i> <?php echo $sessionname; ?> Inventory</h4>
