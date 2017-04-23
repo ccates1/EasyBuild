@@ -32,7 +32,7 @@ if (empty($_SESSION['username'])) {
           data : 'sessionid='+ sessionid.value + '&amount='+ amount.value + '&description='+ description.value + '&isedit=' + '0',
           success: function(data) {
             window.location.reload();
-            window.alert("Item was added successfully!");
+            window.alert("The item was added to your inventory!");
           }
         });
       }
@@ -107,11 +107,19 @@ if (empty($_SESSION['username'])) {
     }
     ?>
     <div class="container">
+      <div class="text-left" style="margin-bottom: 10px;">
+        <?php
+        echo "<a class='text-primary' href=\"javascript:history.go(-1)\"><i class='fa fa-arrow-circle-o-left fa-fw'></i> GO BACK</a>";
+        ?>
+      </div>
       <div class="card">
         <div class="card-header bg-primary white-text">
           <h4><i class="fa fa-check-square-o fa-fw"></i> <?php echo $sessionname; ?> Inventory</h4>
         </div>
         <div class="card-block bg-faded">
+          <div id="success-msg" class="text-center">
+
+          </div>
           <div class="card-block text-center" id="inventory-header">
             <h4 class="text-primary">Select an item to add to the inventory: </h4>
             <hr />

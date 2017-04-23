@@ -131,6 +131,7 @@ if (empty($_SESSION['username'])) {
                       <h4 class="card-title">
                         Message Center
                       </h4>
+                      <img class="mx-auto d-block" src="png/message.png" />
                       <p class="card-text">
                         <a role="button" class="btn btn-outline btn-outline-primary waves-effect btn-sm" href="messagecenter.php?id=<?php echo $sessionid; ?>">Access</a>
                       </p>
@@ -143,6 +144,7 @@ if (empty($_SESSION['username'])) {
                   <div class="card equal">
                     <div class="card-block bg-primary text-center white-text">
                       <h4 class="card-title">Inventory</h4>
+                      <img class="mx-auto d-block" src="png/inventory.png" />
                       <p class="card-text">
                         <a role="button" class="btn btn-outline btn-outline-primary waves-effect btn-sm" href="inventory.php?id=<?php echo $sessionid; ?>">Access</a>
                       </p>
@@ -155,6 +157,7 @@ if (empty($_SESSION['username'])) {
                   <div class="card equal">
                     <div class="card-block bg-primary text-center white-text">
                       <h4 class="card-title">Paint Colors</h4>
+                      <img class="mx-auto d-block" src="png/pantone.png" />
                       <p class="card-text">
                         <a role="button" class="btn btn-outline btn-outline-primary waves-effect btn-sm" href="paint.php">Access</a>
                       </p>
