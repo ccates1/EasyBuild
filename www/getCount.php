@@ -6,9 +6,7 @@ if(isset($_GET['counter'])) {
     
  $count = $_GET['counter'];
 
-    $_SESSION['count'] = $count;
-    
-    echo $count;
+ $_SESSION['count'] = $count;
     
 }
    else {
