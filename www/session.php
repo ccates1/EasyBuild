@@ -26,7 +26,7 @@ if (empty($_SESSION['username'])) {
         data : 'rowdesc='+ desc + '&sessionid='+ sessionid + '&step='+ step,
         success: function(data) {
           window.location.reload();
-          window.alert("Congratulations, all items are not complete!");
+          window.alert("Congratulations, all items are now complete!");
         }
       });
     } else {
@@ -156,10 +156,10 @@ if (empty($_SESSION['username'])) {
                 <div class="col-md-4">
                   <div class="card equal">
                     <div class="card-block bg-primary text-center white-text">
-                      <h4 class="card-title">Paint Colors</h4>
+                      <h4 class="card-title">Paint Room Colors</h4>
                       <img class="mx-auto d-block" src="png/pantone.png" />
                       <p class="card-text">
-                        <a role="button" class="btn btn-outline btn-outline-primary waves-effect btn-sm" href="paint.php">Access</a>
+                        <a role="button" class="btn btn-outline btn-outline-primary waves-effect btn-sm" href="paint.php?id=<?php echo $sessionid; ?>">Access</a>
                       </p>
                     </div>
                     <div class="card-footer primary-color-dark text-center" id="footer">

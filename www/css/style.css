@@ -8,6 +8,14 @@ body {
 html {
   min-height: 100% !important;
 }
+.color-circle {
+  cursor: pointer;
+  background-color: tan;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: red; 
+}
 .hidden { display: none; }
 .input-custom {
   padding: 0px !important;
