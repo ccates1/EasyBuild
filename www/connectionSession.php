@@ -75,7 +75,19 @@
 
             $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`, `session_id_fk`) SELECT id, 'Attic Insulation', '0', session_id FROM ChecklistItems WHERE step = '9';";
 
-            $query3 .= "INSERT INTO ChecklistItems (`session_id`,`description`, `step`, `hasSubs`) SELECT id, 'Obtain Certificate of Occupancy', '10', '0' FROM Sessions WHERE name = '$sessionname';";
+            $query3 .= "INSERT INTO ChecklistItems (`session_id`, `description`, `step`, `hasSubs`) SELECT id, 'Obtain Certificate of Occupancy', '10', '0' FROM Sessions WHERE name = '$sessionname';";
+
+            $query3 .= "INSERT INTO Paint (`session_id_fk`, `id`, `description`, `color`, `isCompleted`) SELECT id, '1', 'Kitchen', 'FFFFFF', '0' FROM Sessions WHERE name = '$sessionname';";
+
+            $query3 .= "INSERT INTO Paint (`session_id_fk`, `id`, `description`, `color`, `isCompleted`) SELECT id, '2', 'Living Room', 'FFFFFF', '0' FROM Sessions WHERE name = '$sessionname';";
+
+            $query3 .= "INSERT INTO Paint (`session_id_fk`, `id`, `description`, `color`, `isCompleted`) SELECT id, '3', 'Dining Room', 'FFFFFF', '0' FROM Sessions WHERE name = '$sessionname';";
+
+            $query3 .= "INSERT INTO Paint (`session_id_fk`, `id`, `description`, `color`, `isCompleted`) SELECT id, '4', 'Master Bedroom', 'FFFFFF', '0' FROM Sessions WHERE name = '$sessionname';";
+
+            $query3 .= "INSERT INTO Paint (`session_id_fk`, `id`, `description`, `color`, `isCompleted`) SELECT id, '5', 'Additional Bedrooms', 'FFFFFF', '0' FROM Sessions WHERE name = '$sessionname';";
+
+            $query3 .= "INSERT INTO Paint (`session_id_fk`, `id`, `description`, `color`, `isCompleted`) SELECT id, '6', 'Bathrooms', 'FFFFFF', '0' FROM Sessions WHERE name = '$sessionname';";
 
             // Execute multi query
             if (mysqli_multi_query($dbc,$query3)){
@@ -147,6 +159,18 @@
             $query3 .= "INSERT INTO Subs (`checklistitem_id`, `description`, `isCompleted`, `session_id_fk`) SELECT id, 'Attic Insulation', '0', session_id FROM ChecklistItems WHERE step = '9';";
 
             $query3 .= "INSERT INTO ChecklistItems (`session_id`,`description`, `step`, `hasSubs`) SELECT id, 'Obtain Certificate of Occupancy', '10', '0' FROM Sessions WHERE name = '$sessionname';";
+
+            $query3 .= "INSERT INTO Paint (`session_id_fk`, `id`, `description`, `color`, `isCompleted`) SELECT id, '1', 'Kitchen', 'FFFFFF', '0' FROM Sessions WHERE name = '$sessionname';";
+
+            $query3 .= "INSERT INTO Paint (`session_id_fk`, `id`, `description`, `color`, `isCompleted`) SELECT id, '2', 'Living Room', 'FFFFFF', '0' FROM Sessions WHERE name = '$sessionname';";
+
+            $query3 .= "INSERT INTO Paint (`session_id_fk`, `id`, `description`, `color`, `isCompleted`) SELECT id, '3', 'Dining Room', 'FFFFFF', '0' FROM Sessions WHERE name = '$sessionname';";
+
+            $query3 .= "INSERT INTO Paint (`session_id_fk`, `id`, `description`, `color`, `isCompleted`) SELECT id, '4', 'Master Bedroom', 'FFFFFF', '0' FROM Sessions WHERE name = '$sessionname';";
+
+            $query3 .= "INSERT INTO Paint (`session_id_fk`, `id`, `description`, `color`, `isCompleted`) SELECT id, '5', 'Additional Bedrooms', 'FFFFFF', '0' FROM Sessions WHERE name = '$sessionname';";
+
+            $query3 .= "INSERT INTO Paint (`session_id_fk`, `id`, `description`, `color`, `isCompleted`) SELECT id, '6', 'Bathrooms', 'FFFFFF', '0' FROM Sessions WHERE name = '$sessionname';";
 
             // Execute multi query
             if (mysqli_multi_query($dbc,$query3)){
