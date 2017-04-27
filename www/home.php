@@ -75,7 +75,7 @@ if (empty($_SESSION['username'])) {
                       }
                     }
                   } else {
-                    $sql = mysqli_query($dbc, "SELECT * FROM Sessions INNER JOIN Builers WHERE Sessions.owner_id = '$id' AND Builders.id = Sessions.builder_id;");
+                    $sql = mysqli_query($dbc, "SELECT * FROM Sessions INNER JOIN Builders WHERE Sessions.owner_id = '$id' AND Builders.id = Sessions.builder_id;");
                     if(mysqli_num_rows($sql) != 0) {
                       $empty = false;
                       while($row = mysqli_fetch_array($sql)) {

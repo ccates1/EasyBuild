@@ -5,6 +5,143 @@ session_start();
 <html>
 <head>
   <?php include("head.html"); ?>
+  <script type="text/javascript">
+    var selection = "";
+    jQuery(document).ready(function($) {
+
+      $("#builder-login-btn").click(function() {
+        var builder = document.getElementById("builder-login").value;
+        selection = builder;
+      });
+      $("#owner-login-btn").click(function() {
+        var owner = document.getElementById("owner-login").value;
+        selection = owner;
+      });
+      $("#login-submit").click(function(e) {
+        var username = document.getElementById("username-login").value;
+        var password = document.getElementById("password-login").value;
+        var msg = "";
+        if(!username) {
+          msg = 'Please enter a username!';
+          document.getElementById("result-msg").innerHTML = msg;
+          e.preventDefault();
+          return;
+        }
+        if(!password) {
+          msg = 'Please enter a password!';
+          document.getElementById("result-msg").innerHTML = msg;
+          e.preventDefault();
+          return;
+        }
+        if(selection == "") {
+          msg = 'Please select a type of user!';
+          document.getElementById("result-msg").innerHTML = msg;
+          e.preventDefault();
+          return;
+        }
+        if(msg == "") {
+
+          $.ajax({
+            type: 'POST',
+            url: 'login.php',
+            data : 'username='+ username + '&password='+ password + '&user_type=' + selection,
+            dataType: "json",
+            error: function(jqXHR, textStatus, errorThrown) {
+              console.log(errorThrown);
+              window.alert("Something unexpected happened. Please try again later!");
+            },
+            success: function(data) {
+              if(data[0] == "Success") {
+                username = "";
+                password = "";
+                window.location.href = "home.php";
+              } else {
+                var result = document.getElementById("result-msg");
+                var errors = "";
+                data.forEach(function(item) {
+                  errors += item + "<br />";
+                });
+                result.innerHTML = errors;
+              }
+            }
+          });
+        }
+
+      });
+
+      $("#builder-register-btn").click(function() {
+        var builder = document.getElementById("builder-register").value;
+        selection = builder;
+      });
+      $("#owner-register-btn").click(function() {
+        var owner = document.getElementById("owner-register").value;
+        selection = owner;
+      });
+      $("#register-submit").click(function() {
+        var username = document.getElementById("username-register").value;
+        var email = document.getElementById("email-register").value;
+        var password = document.getElementById("password-register").value;
+        var confirmPassword = document.getElementById("confirm-password-register").value;
+        var msg = "";
+        if(!username) {
+          msg = 'Please enter a username!';
+          document.getElementById("result-msg").innerHTML = msg;
+          return;
+        }
+        if(!email) {
+          msg = 'Please enter a email!';
+          document.getElementById("result-msg").innerHTML = msg;
+          return;
+        }
+        if(!password) {
+          msg = 'Please enter a password!';
+          document.getElementById("result-msg").innerHTML = msg;
+          return;
+        }
+        if(password != confirmPassword) {
+          msg = 'Passwords do not match!';
+          document.getElementById("result-msg").innerHTML = msg;
+          return;
+        }
+        if(selection == "") {
+          msg = 'Please select a type of user!';
+          document.getElementById("result-msg").innerHTML = msg;
+          return;
+        }
+        if(msg == "") {
+ 
+          $.ajax({
+            type: 'POST',
+            url: 'register.php',
+            data : 'username='+ username + '&email=' + email +
+             '&password=' + password + '&user_type='+ selection,
+            dataType: "json",
+            error: function(jqXHR, textStatus, errorThrown) {
+              console.log(errorThrown);
+              window.alert("Something unexpected happened. Please try again later!");
+            },
+            success: function(data) {
+              if(data[0] == "Success") {
+                username = "";
+                email = "";
+                password = "";
+                confirmPassword = "";
+                window.location.href = "home.php";
+              } else {
+                var result = document.getElementById("result-msg");
+                var errors = "";
+                data.forEach(function(item) {
+                  errors += item + "<br />";
+                });
+                result.innerHTML = errors;
+              }
+            }
+          });
+        }
+
+      });
+    });
+  </script>
 </head>
 <body>
   <?php include("unauthorized-nav.html"); ?>
@@ -22,15 +159,18 @@ session_start();
           </div>
         </div>
         <div class="card-block">
-          <form class="active" id="login-form" method="post" action="login.php">
+          <div id="result-msg" class="text-center text-danger">
+
+          </div>
+          <div class="active" id="login-form" >
             <div class="md-form">
               <i class="fa fa-user prefix"></i>
-              <input type="text" id="username" name="username" class="form-control" />
+              <input type="text" id="username-login" name="username-login" class="form-control" />
               <label for="username">Username</label>
             </div>
             <div class="md-form">
               <i class="fa fa-lock prefix"></i>
-              <input type="password" id="password" name="password" class="form-control" />
+              <input type="password" id="password-login" name="password-login" class="form-control" />
               <label for="password">Password</label>
             </div>
             <div class="row">
@@ -39,36 +179,36 @@ session_start();
                   Are you a home owner or builder?
                 </legend>
                 <div class="btn-group" data-toggle="buttons">
-                  <label class="btn btn-primary" style="box-shadow: 0px;">
-                    <input type="radio" name="user_type" id="builder" value="builder">Builder <i class="fa fa-wrench fa-fw"></i>
+                  <label class="btn btn-primary" id="builder-login-btn" style="box-shadow: 0px;">
+                    <input type="radio" name="user_type" id="builder-login" value="builder">Builder <i class="fa fa-wrench fa-fw"></i>
                   </label>
-                  <label class="btn btn-primary">
-                    <input type="radio" name="user_type" id="owner" value="owner" >Home Owner <i class="fa fa-home fa-fw"></i>
+                  <label class="btn btn-primary" id="owner-login-btn" style="box-shadow: 0px;">
+                    <input type="radio" name="user_type" id="owner-login" value="owner" >Home Owner <i class="fa fa-home fa-fw"></i>
                   </label>
                 </div>
               </div>
             </div>
-            <button type="submit" class="btn bg-primary btn-rounded btn-block">Submit <i class="fa fa-check fa-fw right"></i></button>
-          </form>
-          <form class="" id="register-form" name="registrationForm" method="post" action="register.php" >
+            <button type="button" id="login-submit" class="btn bg-primary btn-rounded btn-block">Submit <i class="fa fa-check fa-fw right"></i></button>
+          </div>
+          <div class="" id="register-form" name="registrationForm" >
             <div class="md-form">
               <i class="fa fa-at prefix"></i>
-              <input type="email" id="email" name="email" class="form-control" />
+              <input type="email" id="email-register" name="email-register" class="form-control" />
               <label for="email">Email</label>
             </div>
             <div class="md-form">
               <i class="fa fa-user prefix"></i>
-              <input type="text" id="username" name="username" class="form-control" />
+              <input type="text" id="username-register" name="username-register" class="form-control" />
               <label for="username">Username</label>
             </div>
             <div class="md-form">
               <i class="fa fa-lock prefix"></i>
-              <input type="password" id="password" name="password" class="form-control" />
+              <input type="password" id="password-register" name="password-register" class="form-control" />
               <label for="password">Password</label>
             </div>
             <div class="md-form">
               <i class="fa fa-lock prefix"></i>
-              <input type="password" id="confirm-password" name="confirm-password" class="form-control" />
+              <input type="password" id="confirm-password-register" name="confirm-password-register" class="form-control" />
               <label for="confirm-password">Confirm Password</label>
             </div>
             <div class="row">
@@ -77,17 +217,17 @@ session_start();
                   Are you a home owner or builder?
                 </legend>
                 <div class="btn-group" data-toggle="buttons">
-                  <label class="btn btn-primary">
-                    <input type="radio" name="selection" id="builder" value="builder">Builder <i class="fa fa-wrench fa-fw"></i>
+                  <label class="btn btn-primary" id="builder-register-btn" style="box-shadow: 0px;">
+                    <input type="radio" name="selection" id="builder-register" value="builder">Builder <i class="fa fa-wrench fa-fw"></i>
                   </label>
-                  <label class="btn btn-primary">
-                    <input type="radio" name="selection" id="owner" value="owner" >Home Owner <i class="fa fa-home fa-fw"></i>
+                  <label class="btn btn-primary" id="owner-register-btn" style="box-shadow: 0px;">
+                    <input type="radio" name="selection" id="owner-register" value="owner" >Home Owner <i class="fa fa-home fa-fw"></i>
                   </label>
                 </div>
               </div>
             </div>
-            <button type="submit" class="btn bg-primary btn-rounded btn-block">Submit <i class="fa fa-check fa-fw right"></i></button>
-          </form>
+            <button type="button" id="register-submit" class="btn bg-primary btn-rounded btn-block">Submit <i class="fa fa-check fa-fw right"></i></button>
+          </div>
         </div>
       </div>
     </div>
@@ -96,6 +236,7 @@ session_start();
   <script type="text/javascript">
   $(function () {
     $('#login-form-link').click(function (e) {
+      selection = "";
       $("#login-form").fadeIn(300);
       $("#register-form").fadeOut(300);
       $('#register-form-link').removeClass('active');
@@ -105,6 +246,7 @@ session_start();
       e.preventDefault();
     });
     $('#register-form-link').click(function (e) {
+      selection = "";
       $("#register-form").fadeIn(300);
       $("#login-form").fadeOut(300);
       $('#login-form-link').removeClass('active');
