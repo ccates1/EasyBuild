@@ -14,11 +14,6 @@
     $password = test_input($_POST["password"]);
     $confirmPassword = test_input($_POST["confirm-password"]);
     $user_type = test_input($_POST["selection"]);
-    echo("<script>console.log('PHP: ".$username."');</script>");
-    echo("<script>console.log('PHP: ".$email."');</script>");
-    echo("<script>console.log('PHP: ".$password."');</script>");
-    echo("<script>console.log('PHP: ".$confirmPassword."');</script>");
-    echo("<script>console.log('PHP: ".$user_type."');</script>");
 
     if(!empty($username) && !empty($email) && !empty($password) && !empty($confirmPassword) && !empty($user_type)) {
       if($user_type == "builder") {
@@ -40,12 +35,20 @@
           $_SESSION['user_type'] = $user_type;
           $_SESSION['username'] = $username;
           $_SESSION['email'] = $email;
+          $sql = mysqli_query($dbc, "SELECT id FROM Builders WHERE username = '$username';");
+          while($row = mysqli_fetch_array($sql)) {
+            $_SESSION['user_id'] = $row['id'];
+          }
           header('location: home.php');
         } else {
           mysqli_query($dbc, "INSERT INTO `Owners` (`username`, `email`, `password`) VALUES ('".$username."', '".$email."', '".$password."');");
           $_SESSION['user_type'] = $user_type;
           $_SESSION['username'] = $username;
           $_SESSION['email'] = $email;
+          $sql = mysqli_query($dbc, "SELECT id FROM Owners WHERE username = '$username';");
+          while($row = mysqli_fetch_array($sql)) {
+            $_SESSION['user_id'] = $row['id'];
+          }
           header('location: home.php');
         }
       }

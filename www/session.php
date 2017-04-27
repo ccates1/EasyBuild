@@ -218,6 +218,7 @@ if (empty($_SESSION['username'])) {
               $hasSubs = $row['hasSubs'];
               $sessionid = $row['session_id'];
               if($hasSubs == '1') {
+
                 echo '<div class="cd-timeline-block" id="'.$index.'">
                 <div class="cd-timeline-img cd-picture">
                 <img src="png/blank.png" alt="">
@@ -267,6 +268,7 @@ if (empty($_SESSION['username'])) {
             }
             while($row = mysqli_fetch_array($query)) {
               $step = $row['step'];
+              $checklistitemid = $row['id'];
               $checklistitemdesc = $row['description'];
               $sessionid = $row['session_id'];
               $hasSubs = $row['hasSubs'];
@@ -280,7 +282,7 @@ if (empty($_SESSION['username'])) {
                   <h2>'.$checklistitemdesc.'</h2>
                   <p>
                   <div class="list-group">';
-                  $query3 = mysqli_query($dbc, "SELECT * FROM Subs WHERE checklistitem_id = '$step' AND isCompleted = '1' AND session_id_fk = '$sessionid';");
+                  $query3 = mysqli_query($dbc, "SELECT * FROM Subs WHERE checklistitem_id = '$checklistitemid' AND isCompleted = '1' AND session_id_fk = '$sessionid';");
                   if(mysqli_num_rows($query3) != 0) {
                     while($row = mysqli_fetch_array($query3)) {
                       $subdesc = $row['description'];
@@ -293,7 +295,7 @@ if (empty($_SESSION['username'])) {
                       </div>';
                     }
                   }
-                  $query4 = mysqli_query($dbc, "SELECT * FROM Subs WHERE checklistitem_id = '$step' AND isCompleted = '0' AND session_id_fk = '$sessionid';");
+                  $query4 = mysqli_query($dbc, "SELECT * FROM Subs WHERE checklistitem_id = '$checklistitemid' AND isCompleted = '0' AND session_id_fk = '$sessionid';");
                   if(mysqli_num_rows($query4) != 0) {
                     while($row = mysqli_fetch_array($query4)) {
                       $subdesc = $row['description'];

@@ -21,15 +21,10 @@ if (empty($_SESSION['username'])) {
           </div>
           <div class="card-body" style="padding: 15px;">
             <?php
-            if($_SESSION['user_type'] == "owner") {
-              $isbuilder = false;
-              $id = $_SESSION['user_id'];
-              $query = mysqli_query($dbc, "SELECT * FROM Sessions INNER JOIN Builders ON Sessions.builder_id = Builders.id;");
-            } else {
-              $isbuilder = true;
-              $id = $_SESSION['user_id'];
-              $query = mysqli_query($dbc, "SELECT * FROM Sessions INNER JOIN Owners ON Sessions.owner_id = Owners.id;");
-            }
+            $id = $_SESSION['user_id'];
+            $email = $_SESSION['email'];
+            $username = $_SESSION['username'];
+            $user_type = $_SESSION['user_type'];
             ?>
             <div class="text-center">
               <legend style="color: #000;">
@@ -52,32 +47,68 @@ if (empty($_SESSION['username'])) {
                   </tr>
                 </thead>
                 <tbody>
-                  <?php if(mysqli_num_rows($query) != 0) { ?>
-                  <?php while($row = mysqli_fetch_array($query)) { ?>
-                  <tr class="text-center">
-                    <td>
-                      <?php echo $row['name']; ?>
-                    </td>
-                    <td>
-                      <?php echo $row['username']; ?>
-                    </td>
-                    <td>
-                      <?php echo $row['email']; ?>
-                    </td>
-                    <td>
-                      <?php $sessionidentifier = $row['id']; ?>
-                      <a role="button" class="btn btn-outline btn-outline-primary waves-effect btn-sm" href="session.php?id=<?php echo $sessionidentifier; ?>">GO</a>
-                    </td>
-                  </tr>
-                  <?php } } else {
-                    ?>
-                    <tr class="text-center">
-                      <td colspan="4">
-                        No sessions found
-                      </td>
-                    </tr>
                   <?php
-                  }?>
+                  $empty = true;
+                  if($user_type == "builder") {
+                    $sql = mysqli_query($dbc, "SELECT * FROM Sessions INNER JOIN Owners WHERE Sessions.builder_id = '$id' AND Owners.id = Sessions.owner_id;");
+                    if(mysqli_num_rows($sql) != 0) {
+                      $empty = false;
+                      while($row = mysqli_fetch_array($sql)) {
+                        $session_name = $row['name'];
+                        $session_id = $row['id'];
+                        $owner_username = $row['username'];
+                        $owner_email = $row['email'];
+                        echo '<tr class="text-center">
+                        <td>
+                        '.$session_name.'
+                        </td>
+                        <td>
+                        '.$owner_username.'
+                        </td>
+                        <td>
+                        '.$owner_email.'
+                        </td>
+                        <td>
+                        <a role="button" class="btn btn-outline btn-outline-primary waves-effect btn-sm" href="session.php?id='.$session_id.'">GO</a>
+                        </td>
+                        </tr>';
+                      }
+                    }
+                  } else {
+                    $sql = mysqli_query($dbc, "SELECT * FROM Sessions INNER JOIN Builers WHERE Sessions.owner_id = '$id' AND Builders.id = Sessions.builder_id;");
+                    if(mysqli_num_rows($sql) != 0) {
+                      $empty = false;
+                      while($row = mysqli_fetch_array($sql)) {
+                        $session_name = $row['name'];
+                        $session_id = $row['id'];
+                        $builder_username = $row['username'];
+                        $builder_email = $row['email'];
+                        echo '<tr class="text-center">
+                        <td>
+                        '.$session_name.'
+                        </td>
+                        <td>
+                        '.$builder_username.'
+                        </td>
+                        <td>
+                        '.$builder_email.'
+                        </td>
+                        <td>
+                        <a role="button" class="btn btn-outline btn-outline-primary waves-effect btn-sm" href="session.php?id='.$session_id.'">GO</a>
+                        </td>
+                        </tr>';
+                      }
+                    }
+                  }
+                  if($empty == true) {
+                    echo '<tr class="text-center">
+                    <td colspan="4">
+                    No sessions found
+                    </td>
+                    </tr>';
+                  }
+                  ?>
+
                 </tbody>
               </table>
             </div>
