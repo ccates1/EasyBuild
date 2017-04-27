@@ -8,10 +8,10 @@ if(isset($_GET['color'])) {
     
     $color = $_GET['color'];
     
-    echo $color;
+    echo $getCount;
     
     if($getCount == 1) {
-        mysqli_query($dbc, "UPDATE Paint SET Color = '$color' WHERE id = 1");
+        mysqli_query($dbc, "UPDATE Paint SET Color = '$color' WHERE id = 1");      
     }
     else if($getCount == 2) {
         mysqli_query($dbc, "UPDATE Paint SET Color = '$color' WHERE id = 2");
